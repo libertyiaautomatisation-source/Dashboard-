@@ -55,7 +55,6 @@ table{width:100%;border-collapse:collapse}
 th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:9px 12px;text-align:left;background:#fafbfc;border-bottom:1px solid var(--border)}
 td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr.hidden{display:none}
 .badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:600;white-space:nowrap}
 .badge.hot{background:var(--hot-bg);color:var(--hot);border:1px solid var(--hot-border)}
 .badge.warm{background:var(--warm-bg);color:var(--warm);border:1px solid var(--warm-border)}
@@ -65,6 +64,7 @@ tr.hidden{display:none}
 .budget-chip{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:10px;color:var(--text)}
 .empty-state{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 .last-update{text-align:center;font-size:10px;color:var(--muted);margin-top:16px}
+.locked-agence{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif}
 </style>
 </head>
 <body>
@@ -77,11 +77,15 @@ tr.hidden{display:none}
 </div>
 <div id="loadingState"><div class="spinner"></div>Chargement des leads...</div>
 <div id="dashboard">
-<div class="agence-bar">
+<div class="agence-bar" id="agenceBarSelect">
 <label>Agence</label>
 <select id="agenceSelect" onchange="applyAgenceFilter()">
 <option value="all">Toutes les agences</option>
 </select>
+</div>
+<div class="agence-bar" id="agenceBarLocked" style="display:none">
+<label>Agence</label>
+<div class="locked-agence">🏢 <span id="lockedAgenceLabel">—</span></div>
 </div>
 <div class="kpis">
 <div class="kpi total"><div class="k-label">Total leads</div><div class="k-value" id="kpiTotal">0</div><div class="k-sub">formulaires reçus</div></div>
@@ -106,7 +110,9 @@ tr.hidden{display:none}
 const SHEET_ID='1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc';
 const SHEET_NAME='Réponses au formulaire 2';
 const API_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-let allLeads=[],currentFilter='all',currentAgence='all';
+const AGENCE_NOMS={'VER':'Vercors immobilier','AGD':'AGDA','FON':'Foncia','IMS':'Immosud','MIS':'Mistral immo','ALG':'Alger immo'};
+let allLeads=[],currentFilter='all',currentAgence='all',lockedCode=null;
+function getUrlAgenceCode(){const p=new URLSearchParams(window.location.search);return(p.get('agence')||'').toUpperCase().trim()||null;}
 function scoreOf(h){if(!h)return'cold';const s=h.trim().toLowerCase();if(s==='immédiatement'||s==='immediatement')return'hot';if(s==='1-3 mois')return'warm';return'cold';}
 function scoreMeta(s){if(s==='hot')return{label:'🔥 Chaud',cls:'hot'};if(s==='warm')return{label:'⚡ Tiède',cls:'warm'};return{label:'❄️ Froid',cls:'cold'};}
 async function loadData(){
@@ -118,22 +124,30 @@ const text=await res.text();
 const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
 const rows=json.table.rows,cols=json.table.cols;
 const colMap={};
-cols.forEach((c,i)=>{const l=(c.label||'').toLowerCase();if(l.includes('horodateur'))colMap.date=i;else if(l.includes('nom'))colMap.nom=i;else if(l.includes('email'))colMap.email=i;else if(l.includes('phone')||l.includes('léphone'))colMap.tel=i;else if(l.includes('type')||l.includes('bien'))colMap.type=i;else if(l.includes('ville')||l.includes('secteur'))colMap.ville=i;else if(l.includes('budget'))colMap.budget=i;else if(l.includes('horizon')||l.includes('achat'))colMap.horizon=i;else if(l.includes('projet'))colMap.statut=i;else if(l.includes('agence'))colMap.agence=i;});
-allLeads=rows.map(row=>{const g=(k)=>{const idx=colMap[k];if(idx===undefined||!row.c[idx])return'';const cell=row.c[idx];return cell.f||(cell.v!==null&&cell.v!==undefined?String(cell.v):'');};return{date:g('date'),nom:g('nom'),type:g('type'),ville:g('ville'),budget:g('budget'),horizon:g('horizon'),agence:g('agence')||'Non assignée',score:scoreOf(g('horizon'))};}).filter(l=>l.nom);
-const agences=[...new Set(allLeads.map(l=>l.agence))].sort();
+cols.forEach((c,i)=>{const l=(c.label||'').toLowerCase();if(l.includes('horodateur'))colMap.date=i;else if(l.includes('nom'))colMap.nom=i;else if(l.includes('type')||l.includes('bien'))colMap.type=i;else if(l.includes('ville')||l.includes('secteur'))colMap.ville=i;else if(l.includes('budget'))colMap.budget=i;else if(l.includes('horizon')||l.includes('achat'))colMap.horizon=i;else if(l.includes('agence'))colMap.agence=i;});
+allLeads=rows.map(row=>{const g=(k)=>{const idx=colMap[k];if(idx===undefined||!row.c[idx])return'';const cell=row.c[idx];return cell.f||(cell.v!==null&&cell.v!==undefined?String(cell.v):'');};return{nom:g('nom'),type:g('type'),ville:g('ville'),budget:g('budget'),horizon:g('horizon'),agence:g('agence')||'',score:scoreOf(g('horizon'))};}).filter(l=>l.nom);
+lockedCode=getUrlAgenceCode();
+if(lockedCode){
+currentAgence=lockedCode;
+document.getElementById('agenceBarSelect').style.display='none';
+document.getElementById('agenceBarLocked').style.display='block';
+document.getElementById('lockedAgenceLabel').textContent=AGENCE_NOMS[lockedCode]||lockedCode;
+}else{
+currentAgence='all';
+const agences=[...new Set(allLeads.map(l=>l.agence).filter(Boolean))].sort();
 const sel=document.getElementById('agenceSelect');
 sel.innerHTML='<option value="all">Toutes les agences</option>';
 agences.forEach(a=>{sel.innerHTML+=`<option value="${a}">${a}</option>`;});
-const params=new URLSearchParams(window.location.search);
-const ap=params.get('agence');
-if(ap){const match=agences.find(a=>a.toLowerCase().replace(/\s+/g,'-')===ap.toLowerCase());if(match){sel.value=match;currentAgence=match;}}
+document.getElementById('agenceBarSelect').style.display='block';
+document.getElementById('agenceBarLocked').style.display='none';
+}
 document.getElementById('lastUpdate').textContent=`Actualisé à ${new Date().toLocaleTimeString('fr-FR')}`;
 document.getElementById('loadingState').style.display='none';
 document.getElementById('dashboard').style.display='block';
 renderDashboard();
-}catch(e){document.getElementById('loadingState').innerHTML='<div style="color:#e03131;text-align:center;padding:40px 20px">⚠️ Impossible de charger les données.<br><span style="font-size:11px;color:#8892a0">Vérifie que le Sheet est partagé en lecture publique.</span><br><button onclick="loadData()" style="margin-top:16px;padding:8px 16px;background:#3b5bdb;color:#fff;border:none;border-radius:7px;cursor:pointer">Réessayer</button></div>';}}
-function getByAgence(){return currentAgence==='all'?allLeads:allLeads.filter(l=>l.agence===currentAgence);}
-function getFiltered(){return allLeads.filter(l=>(currentAgence==='all'||l.agence===currentAgence)&&(currentFilter==='all'||l.score===currentFilter));}
+}catch(e){document.getElementById('loadingState').innerHTML='<div style="color:#e03131;text-align:center;padding:40px 20px">⚠️ Impossible de charger les données.<br><button onclick="loadData()" style="margin-top:16px;padding:8px 16px;background:#3b5bdb;color:#fff;border:none;border-radius:7px;cursor:pointer">Réessayer</button></div>';}}
+function getByAgence(){if(currentAgence==='all')return allLeads;if(lockedCode)return allLeads.filter(l=>l.agence.toUpperCase()===lockedCode);return allLeads.filter(l=>l.agence===currentAgence);}
+function getFiltered(){return getByAgence().filter(l=>currentFilter==='all'||l.score===currentFilter);}
 function renderDashboard(){
 const base=getByAgence();
 const hot=base.filter(l=>l.score==='hot').length,warm=base.filter(l=>l.score==='warm').length,cold=base.filter(l=>l.score==='cold').length,total=base.length;
@@ -141,17 +155,16 @@ document.getElementById('kpiTotal').textContent=total;
 document.getElementById('kpiHot').textContent=hot;
 document.getElementById('kpiWarm').textContent=warm;
 document.getElementById('kpiCold').textContent=cold;
-document.getElementById('headerSubtitle').textContent=currentAgence==='all'?`${total} prospect${total>1?'s':''} — toutes agences`:`${total} prospect${total>1?'s':''} — ${currentAgence}`;
+let sub='toutes agences';
+if(lockedCode)sub=AGENCE_NOMS[lockedCode]||lockedCode;
+else if(currentAgence!=='all')sub=currentAgence;
+document.getElementById('headerSubtitle').textContent=`${total} prospect${total>1?'s':''} — ${sub}`;
 const types={};base.forEach(l=>{if(l.type)types[l.type]=(types[l.type]||0)+1;});
 const maxT=Math.max(...Object.values(types),1);
 const tc={'Appartement':'#3b5bdb','Maison':'#e07b00','Local':'#1971c2'};
-document.getElementById('typeChart').innerHTML=Object.entries(types).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="bar-group"><div class="bar-label"><span class="b-name">${n}</span><span class="b-count">${c} (${Math.round(c/total*100)}%)</span></div><div class="bar-track"><div class="bar-fill" style="width:${c/maxT*100}%;background:${tc[n]||'#3b5bdb'}"></div></div></div>`).join('');
+document.getElementById('typeChart').innerHTML=total===0?'<div class="empty-state">Aucun prospect</div>':Object.entries(types).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="bar-group"><div class="bar-label"><span class="b-name">${n}</span><span class="b-count">${c} (${Math.round(c/total*100)}%)</span></div><div class="bar-track"><div class="bar-fill" style="width:${c/maxT*100}%;background:${tc[n]||'#3b5bdb'}"></div></div></div>`).join('');
 renderTable();}
-function renderTable(){
-const f=getFiltered();const tbody=document.getElementById('tableBody');
-if(!f.length){tbody.innerHTML='<tr><td colspan="5"><div class="empty-state">Aucun prospect</div></td></tr>';document.getElementById('tableCount').textContent='0 prospect';return;}
-tbody.innerHTML=f.map(l=>{const m=scoreMeta(l.score);return`<tr><td><span class="badge ${m.cls}">${m.label}</span></td><td><div class="name-cell">${l.nom}</div></td><td class="city-cell">${l.ville||'—'}</td><td>${l.horizon||'—'}</td><td><span class="budget-chip">${l.budget||'N/A'}</span></td></tr>`;}).join('');
-document.getElementById('tableCount').textContent=`${f.length} prospect${f.length>1?'s':''}`;}
+function renderTable(){const f=getFiltered();const tbody=document.getElementById('tableBody');if(!f.length){tbody.innerHTML='<tr><td colspan="5"><div class="empty-state">Aucun prospect</div></td></tr>';document.getElementById('tableCount').textContent='0 prospect';return;}tbody.innerHTML=f.map(l=>{const m=scoreMeta(l.score);return`<tr><td><span class="badge ${m.cls}">${m.label}</span></td><td><div class="name-cell">${l.nom}</div></td><td class="city-cell">${l.ville||'—'}</td><td>${l.horizon||'—'}</td><td><span class="budget-chip">${l.budget||'N/A'}</span></td></tr>`;}).join('');document.getElementById('tableCount').textContent=`${f.length} prospect${f.length>1?'s':''}`;}
 function filterTable(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
 function applyAgenceFilter(){currentAgence=document.getElementById('agenceSelect').value;currentFilter='all';document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.filter-btn')[0].classList.add('active');renderDashboard();}
 loadData();
