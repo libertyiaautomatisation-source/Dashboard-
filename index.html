@@ -86,7 +86,7 @@ transition: background 0.2s;
 opacity: 1 !important;
 }
 #btn-refresh:hover { background: var(–blue-dark); }
-#btn-refresh:disabled { background: #93A4E0; cursor: not-allowed; }
+#btn-refresh:disabled { background: #93A4E0 !important; cursor: not-allowed; pointer-events: none; }
 .spin { display: inline-block; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -457,6 +457,7 @@ function setStatus(msg, loading) {
   icon.className = loading ? 'spin' : '';
   icon.textContent = '↻';
   btn.disabled = loading;
+  btn.style.background = loading ? '#93A4E0' : '#3B5BDB';
 }
 
 function showError(msg) {
