@@ -4,312 +4,479 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Prospects</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Dashboard Prospects – Liberty IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f6f9;--white:#ffffff;--border:#e2e6ed;--text:#1a1f2e;--muted:#8892a0;--accent:#3b5bdb;--hot:#e03131;--hot-bg:#fff5f5;--hot-border:#ffc9c9;--warm:#e07b00;--warm-bg:#fff8ee;--warm-border:#ffd68a;--cold:#1971c2;--cold-bg:#f0f6ff;--cold-border:#a5c8fa;--shadow:0 1px 4px rgba(0,0,0,0.07)}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;min-height:100vh;padding:20px 14px 40px}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.header-left h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);line-height:1.1}
-.header-left h1 span{color:var(--accent)}
-.header-left .subtitle{font-size:11px;color:var(--muted);margin-top:3px}
-.refresh-btn{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-family:'Inter',sans-serif;font-size:12px;color:var(--accent);cursor:pointer;box-shadow:var(--shadow)}
-#loadingState{text-align:center;padding:60px 20px;color:var(--muted);font-size:13px}
-.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-#dashboard{display:none}
-.agence-bar{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:16px;box-shadow:var(--shadow)}
-.agence-bar label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:6px}
-.agence-bar select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text)}
-.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-.kpi{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:var(--shadow)}
-.kpi .k-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
-.kpi .k-value{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;line-height:1}
-.kpi .k-sub{font-size:10px;color:var(--muted);margin-top:3px}
-.kpi.total .k-value{color:var(--accent)}
-.kpi.hot{background:var(--hot-bg);border-color:var(--hot-border)}
-.kpi.hot .k-value{color:var(--hot)}
-.kpi.warm{background:var(--warm-bg);border-color:var(--warm-border)}
-.kpi.warm .k-value{color:var(--warm)}
-.kpi.cold{background:var(--cold-bg);border-color:var(--cold-border)}
-.kpi.cold .k-value{color:var(--cold)}
-.chart-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
-.chart-card h3{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:14px}
-.bar-group{margin-bottom:10px}
-.bar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
-.bar-label .b-name{color:var(--text);font-weight:500}
-.bar-label .b-count{color:var(--muted)}
-.bar-track{height:7px;background:var(--bg);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px}
-.filters{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
-.filter-btn{background:var(--white);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;cursor:pointer}
-.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.filter-btn.active.hot{background:var(--hot);border-color:var(--hot)}
-.filter-btn.active.warm{background:var(--warm);border-color:var(--warm)}
-.filter-btn.active.cold{background:var(--cold);border-color:var(--cold)}
-.table-card{background:var(--white);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
-.table-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)}
-.table-head h3{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-#tableCount{font-size:11px;color:var(--muted)}
-table{width:100%;border-collapse:collapse}
-th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:9px 12px;text-align:left;background:#fafbfc;border-bottom:1px solid var(--border)}
-td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-.badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:600;white-space:nowrap}
-.badge.hot{background:var(--hot-bg);color:var(--hot);border:1px solid var(--hot-border)}
-.badge.warm{background:var(--warm-bg);color:var(--warm);border:1px solid var(--warm-border)}
-.badge.cold{background:var(--cold-bg);color:var(--cold);border:1px solid var(--cold-border)}
-.name-cell{font-size:12px;font-weight:500;color:var(--text)}
-.city-cell{font-size:11px;color:var(--muted)}
-.budget-chip{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:10px;color:var(--text)}
-.empty-state{text-align:center;padding:30px;color:var(--muted);font-size:13px}
-.last-update{text-align:center;font-size:10px;color:var(--muted);margin-top:16px}
-.locked-agence{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif}
+  :root {
+    --blue: #3B5BDB;
+    --blue-light: #4C6EF5;
+    --blue-dark: #2241C7;
+    --chaud: #FF6B35;
+    --tiede: #F59F00;
+    --froid: #339AF0;
+    --bg: #F0F4FF;
+    --card: #FFFFFF;
+    --text: #1A1F36;
+    --muted: #6B7280;
+    --border: #E2E8F0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+/* HEADER */
+header {
+background: var(–blue);
+padding: 18px 24px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+width: 38px; height: 38px;
+background: white;
+border-radius: 10px;
+display: flex; align-items: center; justify-content: center;
+font-family: ‘Syne’, sans-serif;
+font-weight: 800; font-size: 16px;
+color: var(–blue);
+flex-shrink: 0;
+}
+.header-title { font-family: ‘Syne’, sans-serif; color: white; }
+.header-title h1 { font-size: 18px; font-weight: 700; line-height: 1.1; }
+.header-title p { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+#agence-badge {
+background: rgba(255,255,255,0.2);
+color: white;
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 13px;
+padding: 5px 12px;
+border-radius: 20px;
+letter-spacing: 0.05em;
+}
+
+/* MAIN */
+main { padding: 20px 16px 40px; max-width: 700px; margin: 0 auto; }
+
+/* STATUS BAR */
+#status-bar {
+display: flex; align-items: center; justify-content: space-between;
+margin-bottom: 18px; flex-wrap: wrap; gap: 8px;
+}
+#status-msg { font-size: 13px; color: var(–muted); }
+#btn-refresh {
+background: var(–blue);
+color: white;
+border: none;
+padding: 8px 16px;
+border-radius: 20px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+display: flex; align-items: center; gap: 6px;
+transition: background 0.2s;
+}
+#btn-refresh:hover { background: var(–blue-dark); }
+#btn-refresh:disabled { opacity: 0.5; cursor: not-allowed; }
+.spin { display: inline-block; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* STAT CARDS */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+margin-bottom: 18px;
+}
+@media(max-width: 480px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+background: var(–card);
+border-radius: 14px;
+padding: 14px 12px;
+text-align: center;
+border: 1px solid var(–border);
+transition: transform 0.15s;
+}
+.stat-card:hover { transform: translateY(-2px); }
+.stat-icon { font-size: 22px; margin-bottom: 4px; }
+.stat-value {
+font-family: ‘Syne’, sans-serif;
+font-size: 26px; font-weight: 800;
+line-height: 1;
+}
+.stat-label { font-size: 11px; color: var(–muted); margin-top: 4px; }
+.card-total .stat-value { color: var(–blue); }
+.card-chaud .stat-value { color: var(–chaud); }
+.card-tiede .stat-value { color: var(–tiede); }
+.card-froid .stat-value { color: var(–froid); }
+
+/* FILTERS */
+.filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-btn {
+border: 1.5px solid var(–border);
+background: var(–card);
+color: var(–muted);
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 13px;
+font-family: ‘DM Sans’, sans-serif;
+cursor: pointer;
+transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(–blue); color: var(–blue); }
+.filter-btn.active { background: var(–blue); border-color: var(–blue); color: white; }
+.filter-btn.f-chaud.active { background: var(–chaud); border-color: var(–chaud); }
+.filter-btn.f-tiede.active { background: var(–tiede); border-color: var(–tiede); }
+.filter-btn.f-froid.active { background: var(–froid); border-color: var(–froid); }
+
+/* TABLE */
+.table-wrap {
+background: var(–card);
+border-radius: 16px;
+border: 1px solid var(–border);
+overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; }
+thead { background: #F8FAFF; }
+th {
+padding: 12px 14px;
+text-align: left;
+font-size: 11px;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.06em;
+color: var(–muted);
+border-bottom: 1px solid var(–border);
+}
+td {
+padding: 12px 14px;
+font-size: 13px;
+border-bottom: 1px solid #F1F5F9;
+vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #F8FAFF; }
+
+.badge {
+display: inline-flex; align-items: center; gap: 4px;
+padding: 3px 9px; border-radius: 20px;
+font-size: 11px; font-weight: 600;
+}
+.badge-chaud { background: #FFF0E8; color: var(–chaud); }
+.badge-tiede { background: #FFF8E1; color: var(–tiede); }
+.badge-froid { background: #E7F4FF; color: var(–froid); }
+
+.no-data {
+text-align: center; padding: 40px 20px;
+color: var(–muted); font-size: 14px;
+}
+.no-data .icon { font-size: 36px; margin-bottom: 10px; }
+
+/* ERROR */
+#error-box {
+background: #FEF2F2; border: 1px solid #FECACA;
+border-radius: 12px; padding: 16px;
+font-size: 13px; color: #DC2626;
+margin-bottom: 16px; display: none;
+}
+#debug-box {
+background: #1A1F36; color: #A5B4FC;
+border-radius: 12px; padding: 14px;
+font-size: 11px; font-family: monospace;
+margin-bottom: 16px; display: none;
+word-break: break-all; white-space: pre-wrap;
+}
 </style>
+
 </head>
 <body>
-<div class="header">
-<div class="header-left">
-<h1>Dashboard<br><span>Prospects</span></h1>
-<div class="subtitle" id="headerSubtitle">Chargement...</div>
-</div>
-<button class="refresh-btn" onclick="loadData()">↻ Actualiser</button>
-</div>
-<div id="loadingState"><div class="spinner"></div>Chargement des leads...</div>
-<div id="dashboard">
-<div class="agence-bar" id="agenceBarSelect">
-<label>Agence</label>
-<select id="agenceSelect" onchange="applyAgenceFilter()">
-<option value="all">Toutes les agences</option>
-</select>
-</div>
-<div class="agence-bar" id="agenceBarLocked" style="display:none">
-<label>Agence</label>
-<div class="locked-agence">🏢 <span id="lockedAgenceLabel">—</span></div>
-</div>
-<div class="kpis">
-<div class="kpi total"><div class="k-label">Total leads</div><div class="k-value" id="kpiTotal">0</div><div class="k-sub">formulaires reçus</div></div>
-<div class="kpi hot"><div class="k-label">🔥 Chauds</div><div class="k-value" id="kpiHot">0</div><div class="k-sub">Immédiatement</div></div>
-<div class="kpi warm"><div class="k-label">⚡ Tièdes</div><div class="k-value" id="kpiWarm">0</div><div class="k-sub">1–3 mois</div></div>
-<div class="kpi cold"><div class="k-label">❄️ Froids</div><div class="k-value" id="kpiCold">0</div><div class="k-sub">3 mois+</div></div>
-</div>
-<div class="chart-card"><h3>Type de bien</h3><div id="typeChart"></div></div>
-<div class="filters">
-<button class="filter-btn active" onclick="filterTable('all',this)">Tous</button>
-<button class="filter-btn hot" onclick="filterTable('hot',this)">🔥 Chauds</button>
-<button class="filter-btn warm" onclick="filterTable('warm',this)">⚡ Tièdes</button>
-<button class="filter-btn cold" onclick="filterTable('cold',this)">❄️ Froids</button>
-</div>
-<div class="table-card">
-<div class="table-head"><h3>Liste des prospects</h3><div id="tableCount"></div></div>
-<div style="overflow-x:auto"><table><thead><tr><th>Score</th><th>Nom</th><th>Ville</th><th>Horizon</th><th>Budget</th></tr></thead><tbody id="tableBody"></tbody></table></div>
-</div>
-<div class="last-update" id="lastUpdate"></div>
-</div>
-<script>
-const SHEET_ID='1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc';
-const API_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=R%C3%A9ponses%20au%20formulaire%202`;
 
-// Mapping code court → nom complet (et inverse)
-const AGENCE_NOMS={
-‘VER’:‘Vercors immobilier’,
-‘AGD’:‘AGDA’,
-‘FON’:‘Foncia’,
-‘IMS’:‘Immosud’,
-‘MIS’:‘Mistral immo’,
-‘ALG’:‘Alger immo’
+<header>
+  <div class="header-left">
+    <div class="logo-mark">LIA</div>
+    <div class="header-title">
+      <h1>Dashboard Prospects</h1>
+      <p>Liberty IA Automatisation</p>
+    </div>
+  </div>
+  <div id="agence-badge">—</div>
+</header>
+
+<main>
+  <div id="status-bar">
+    <span id="status-msg">Chargement...</span>
+    <button id="btn-refresh" onclick="loadData()">
+      <span id="refresh-icon">↻</span> Actualiser
+    </button>
+  </div>
+
+  <div id="error-box"></div>
+  <div id="debug-box"></div>
+
+  <div class="stats-grid">
+    <div class="stat-card card-total">
+      <div class="stat-icon">📋</div>
+      <div class="stat-value" id="count-total">0</div>
+      <div class="stat-label">Total leads</div>
+    </div>
+    <div class="stat-card card-chaud">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-value" id="count-chaud">0</div>
+      <div class="stat-label">Chauds</div>
+    </div>
+    <div class="stat-card card-tiede">
+      <div class="stat-icon">⚡</div>
+      <div class="stat-value" id="count-tiede">0</div>
+      <div class="stat-label">Tièdes</div>
+    </div>
+    <div class="stat-card card-froid">
+      <div class="stat-icon">❄️</div>
+      <div class="stat-value" id="count-froid">0</div>
+      <div class="stat-label">Froids</div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter('all',this)">Tous</button>
+    <button class="filter-btn f-chaud" onclick="setFilter('Chaud',this)">🔥 Chauds</button>
+    <button class="filter-btn f-tiede" onclick="setFilter('Tiède',this)">⚡ Tièdes</button>
+    <button class="filter-btn f-froid" onclick="setFilter('Froid',this)">❄️ Froids</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>Nom</th>
+          <th>Ville</th>
+          <th>Horizon</th>
+          <th>Budget</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <tr><td colspan="5" class="no-data"><div class="icon">⏳</div>Chargement des données…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+// ─── CONFIG ─────────────────────────────────────────────────────────────────
+const SHEET_ID = '1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc';
+const SHEET_NAME = 'Réponses au formulaire 2';
+
+// Colonnes par INDEX FIXE (0-based)
+// A=0  B=1  C=2  D=3  E=4  F=5  G=6  H=7  (I=8 absent)  J=9  K=10
+const COL = {
+  horodateur : 0,   // A
+  nom        : 1,   // B
+  email      : 2,   // C
+  telephone  : 3,   // D
+  type       : 4,   // E
+  ville      : 5,   // F
+  budget     : 6,   // G
+  horizon    : 7,   // H
+  refDossier : 9,   // J
+  agence     : 10   // K
 };
 
-// Mapping nom complet → code court (généré automatiquement)
-const AGENCE_NOM_TO_CODE={};
-Object.entries(AGENCE_NOMS).forEach(([code,nom])=>{
-AGENCE_NOM_TO_CODE[nom.toUpperCase()]=code;
-// variantes courantes sans accents / espaces
-AGENCE_NOM_TO_CODE[nom.toUpperCase().replace(/\s+/g,’’)]=code;
-});
-// Variantes manuelles connues
-AGENCE_NOM_TO_CODE[‘VERCORS IMMOBILIER’]=        ‘VER’;
-AGENCE_NOM_TO_CODE[‘VERCORSIMMOBILIER’]=          ‘VER’;
-AGENCE_NOM_TO_CODE[‘LAFORET LYON’]=              ‘FON’; // Laforêt Lyon → Foncia si besoin, sinon ignorer
-AGENCE_NOM_TO_CODE[‘LAFORÊT LYON’]=              ‘FON’;
-AGENCE_NOM_TO_CODE[‘MISTRAL IMMO’]=              ‘MIS’;
-AGENCE_NOM_TO_CODE[‘IMMOSUD’]=                   ‘IMS’;
-AGENCE_NOM_TO_CODE[‘ALGER IMMO’]=                ‘ALG’;
-AGENCE_NOM_TO_CODE[‘AGDA’]=                      ‘AGD’;
-
-// Normalise n’importe quelle valeur de la colonne Agence → code court
-function normalizeAgenceCode(val){
-if(!val)return’’;
-const upper=val.trim().toUpperCase();
-// Déjà un code court ?
-if(AGENCE_NOMS[upper])return upper;
-// Chercher dans le mapping nom→code
-if(AGENCE_NOM_TO_CODE[upper])return AGENCE_NOM_TO_CODE[upper];
-// Fallback : retourner la valeur telle quelle (pour le select admin)
-return upper;
+// Score basé sur l'horizon
+function scoreFromHorizon(h) {
+  if (!h) return 'Froid';
+  const s = h.toLowerCase();
+  if (s.includes('immédiat') || s.includes('urgent') || s.includes('1 mois') || s.includes('moins')) return 'Chaud';
+  if (s.includes('1') || s.includes('2') || s.includes('3') || s.includes('mois')) return 'Tiède';
+  return 'Froid';
 }
 
-let allLeads=[],currentFilter=‘all’,currentAgence=‘all’,lockedCode=null;
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let allRows = [];
+let currentFilter = 'all';
+let agenceCode = '';
 
-function getUrlAgenceCode(){
-const p=new URLSearchParams(window.location.search);
-return(p.get(‘agence’)||’’).toUpperCase().trim()||null;
-}
-
-function scoreOf(h){
-if(!h)return’cold’;
-const s=h.trim().toLowerCase();
-if(s===‘immédiatement’||s===‘immediatement’)return’hot’;
-if(s===‘1-3 mois’||s===‘1–3 mois’)return’warm’;
-return’cold’;
-}
-
-function scoreMeta(s){
-if(s===‘hot’)return{label:‘🔥 Chaud’,cls:‘hot’};
-if(s===‘warm’)return{label:‘⚡ Tiède’,cls:‘warm’};
-return{label:‘❄️ Froid’,cls:‘cold’};
-}
-
-async function loadData(){
-document.getElementById(‘loadingState’).style.display=‘block’;
-document.getElementById(‘dashboard’).style.display=‘none’;
-try{
-const res=await fetch(API_URL);
-const text=await res.text();
-const json=JSON.parse(text.match(/google.visualization.Query.setResponse(([\s\S]*))/)[1]);
-const rows=json.table.rows,cols=json.table.cols;
-const colMap={};
-cols.forEach((c,i)=>{
-const l=(c.label||’’).toLowerCase();
-if(l.includes(‘horodateur’))colMap.date=i;
-else if(l.includes(‘nom’))colMap.nom=i;
-else if(l.includes(‘type’)||l.includes(‘bien’))colMap.type=i;
-else if(l.includes(‘ville’)||l.includes(‘secteur’))colMap.ville=i;
-else if(l.includes(‘budget’))colMap.budget=i;
-else if(l.includes(‘horizon’)||l.includes(‘achat’))colMap.horizon=i;
-else if(l.includes(‘agence’))colMap.agence=i;
+// ─── INIT ────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  agenceCode = (params.get('agence') || '').trim().toUpperCase();
+  document.getElementById('agence-badge').textContent = agenceCode || 'TOUTES';
+  loadData();
 });
 
-```
-allLeads=rows.map(row=>{
-  const g=(k)=>{
-    const idx=colMap[k];
-    if(idx===undefined||!row.c[idx])return'';
-    const cell=row.c[idx];
-    return cell.f||(cell.v!==null&&cell.v!==undefined?String(cell.v):'');
+// ─── LOAD ────────────────────────────────────────────────────────────────────
+function loadData() {
+  setStatus('Chargement…', true);
+  hideError();
+
+  // JSONP pur — aucun fetch(), zéro CORS
+  // Google gviz accepte : tqx=responseHandler:monCallback
+  const callbackName = 'lia_cb_' + Date.now();
+
+  const src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+              '/gviz/tq?tqx=responseHandler:' + callbackName +
+              '&sheet=' + encodeURIComponent(SHEET_NAME);
+
+  window[callbackName] = function(data) {
+    clearTimeout(timer);
+    delete window[callbackName];
+    if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+    parseGviz(data);
   };
-  const rawAgence=g('agence')||'';
-  return{
-    nom:g('nom'),
-    type:g('type'),
-    ville:g('ville'),
-    budget:g('budget'),
-    horizon:g('horizon'),
-    agence:normalizeAgenceCode(rawAgence), // toujours un code court
-    score:scoreOf(g('horizon'))
+
+  const scriptEl = document.createElement('script');
+  scriptEl.src = src;
+  scriptEl.onerror = function() {
+    clearTimeout(timer);
+    delete window[callbackName];
+    showError('Impossible de contacter Google Sheets. Vérifiez que le classeur est bien public "Tous les utilisateurs ayant le lien".');
+    setStatus('Erreur', false);
   };
-}).filter(l=>l.nom);
 
-lockedCode=getUrlAgenceCode();
-if(lockedCode){
-  currentAgence=lockedCode;
-  document.getElementById('agenceBarSelect').style.display='none';
-  document.getElementById('agenceBarLocked').style.display='block';
-  document.getElementById('lockedAgenceLabel').textContent=AGENCE_NOMS[lockedCode]||lockedCode;
-}else{
-  currentAgence='all';
-  const agences=[...new Set(allLeads.map(l=>l.agence).filter(Boolean))].sort();
-  const sel=document.getElementById('agenceSelect');
-  sel.innerHTML='<option value="all">Toutes les agences</option>';
-  agences.forEach(a=>{
-    const label=AGENCE_NOMS[a]||a;
-    sel.innerHTML+=`<option value="${a}">${label}</option>`;
-  });
-  document.getElementById('agenceBarSelect').style.display='block';
-  document.getElementById('agenceBarLocked').style.display='none';
+  const timer = setTimeout(function() {
+    delete window[callbackName];
+    if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+    showError('Délai dépassé. Réessayez dans quelques secondes.');
+    setStatus('Erreur', false);
+  }, 12000);
+
+  document.head.appendChild(scriptEl);
 }
 
-document.getElementById('lastUpdate').textContent=`Actualisé à ${new Date().toLocaleTimeString('fr-FR')}`;
-document.getElementById('loadingState').style.display='none';
-document.getElementById('dashboard').style.display='block';
-renderDashboard();
-```
+// ─── PARSE ───────────────────────────────────────────────────────────────────
+function parseGviz(data) {
+  try {
+    const rows = data.table ? data.table.rows : [];
+    const cols = data.table ? data.table.cols : [];
 
-}catch(e){
-document.getElementById(‘loadingState’).innerHTML=’<div style="color:#e03131;text-align:center;padding:40px 20px">⚠️ Impossible de charger les données.<br><button onclick="loadData()" style="margin-top:16px;padding:8px 16px;background:#3b5bdb;color:#fff;border:none;border-radius:7px;cursor:pointer">Réessayer</button></div>’;
-}
-}
+    showDebug('Colonnes reçues (' + cols.length + ') : ' +
+      cols.map((c,i) => i + '=' + (c.label || '[vide]')).join(', ') +
+      '\nLignes : ' + rows.length);
 
-function getByAgence(){
-if(currentAgence===‘all’)return allLeads;
-const code=lockedCode||currentAgence;
-return allLeads.filter(l=>l.agence===code);
-}
+    allRows = [];
 
-function getFiltered(){
-return getByAgence().filter(l=>currentFilter===‘all’||l.score===currentFilter);
-}
+    rows.forEach(row => {
+      if (!row || !row.c) return;
+      const c = row.c;
 
-function renderDashboard(){
-const base=getByAgence();
-const hot=base.filter(l=>l.score===‘hot’).length;
-const warm=base.filter(l=>l.score===‘warm’).length;
-const cold=base.filter(l=>l.score===‘cold’).length;
-const total=base.length;
-document.getElementById(‘kpiTotal’).textContent=total;
-document.getElementById(‘kpiHot’).textContent=hot;
-document.getElementById(‘kpiWarm’).textContent=warm;
-document.getElementById(‘kpiCold’).textContent=cold;
+      const get = (idx) => {
+        if (!c[idx] || c[idx].v === null || c[idx].v === undefined) return '';
+        return String(c[idx].v).trim();
+      };
 
-let sub=‘toutes agences’;
-if(lockedCode)sub=AGENCE_NOMS[lockedCode]||lockedCode;
-else if(currentAgence!==‘all’)sub=AGENCE_NOMS[currentAgence]||currentAgence;
-document.getElementById(‘headerSubtitle’).textContent=`${total} prospect${total>1?'s':''} — ${sub}`;
+      const refDossier = get(COL.refDossier).toUpperCase();
+      const agenceVal  = get(COL.agence).toUpperCase();
 
-const types={};
-base.forEach(l=>{if(l.type)types[l.type]=(types[l.type]||0)+1;});
-const maxT=Math.max(…Object.values(types),1);
-const tc={‘Appartement’:’#3b5bdb’,‘Maison’:’#e07b00’,‘Local’:’#1971c2’};
-document.getElementById(‘typeChart’).innerHTML=total===0
-?’<div class="empty-state">Aucun prospect</div>’
-:Object.entries(types).sort((a,b)=>b[1]-a[1]).map(([n,c])=>
-`<div class="bar-group"><div class="bar-label"><span class="b-name">${n}</span><span class="b-count">${c} (${Math.round(c/total*100)}%)</span></div><div class="bar-track"><div class="bar-fill" style="width:${c/maxT*100}%;background:${tc[n]||'#3b5bdb'}"></div></div></div>`
-).join(’’);
-renderTable();
-}
+      // Filtre agence : on accepte la ligne si le code correspond à J ou K
+      if (agenceCode) {
+        if (refDossier !== agenceCode && agenceVal !== agenceCode) return;
+      }
 
-function renderTable(){
-const f=getFiltered();
-const tbody=document.getElementById(‘tableBody’);
-if(!f.length){
-tbody.innerHTML=’<tr><td colspan="5"><div class="empty-state">Aucun prospect</div></td></tr>’;
-document.getElementById(‘tableCount’).textContent=‘0 prospect’;
-return;
-}
-tbody.innerHTML=f.map(l=>{
-const m=scoreMeta(l.score);
-return`<tr><td><span class="badge ${m.cls}">${m.label}</span></td><td><div class="name-cell">${l.nom}</div></td><td class="city-cell">${l.ville||'—'}</td><td>${l.horizon||'—'}</td><td><span class="budget-chip">${l.budget||'N/A'}</span></td></tr>`;
-}).join(’’);
-document.getElementById(‘tableCount’).textContent=`${f.length} prospect${f.length>1?'s':''}`;
+      const horizon = get(COL.horizon);
+      const score   = scoreFromHorizon(horizon);
+
+      allRows.push({
+        nom      : get(COL.nom)      || 'Anonyme',
+        email    : get(COL.email),
+        tel      : get(COL.telephone),
+        type     : get(COL.type),
+        ville    : get(COL.ville)    || '—',
+        budget   : get(COL.budget)   || '—',
+        horizon  : horizon           || '—',
+        score    : score,
+        ref      : refDossier || agenceVal,
+      });
+    });
+
+    renderStats();
+    renderTable();
+    setStatus('Mis à jour · ' + new Date().toLocaleTimeString('fr-FR'), false);
+  } catch(e) {
+    showError('Erreur de parsing : ' + e.message);
+    setStatus('Erreur', false);
+  }
 }
 
-function filterTable(f,btn){
-currentFilter=f;
-document.querySelectorAll(’.filter-btn’).forEach(b=>b.classList.remove(‘active’));
-btn.classList.add(‘active’);
-renderTable();
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function renderStats() {
+  const chauds = allRows.filter(r => r.score === 'Chaud').length;
+  const tièdes = allRows.filter(r => r.score === 'Tiède').length;
+  const froids = allRows.filter(r => r.score === 'Froid').length;
+
+  document.getElementById('count-total').textContent = allRows.length;
+  document.getElementById('count-chaud').textContent = chauds;
+  document.getElementById('count-tiede').textContent = tièdes;
+  document.getElementById('count-froid').textContent = froids;
 }
 
-function applyAgenceFilter(){
-currentAgence=document.getElementById(‘agenceSelect’).value;
-currentFilter=‘all’;
-document.querySelectorAll(’.filter-btn’).forEach(b=>b.classList.remove(‘active’));
-document.querySelectorAll(’.filter-btn’)[0].classList.add(‘active’);
-renderDashboard();
+function renderTable() {
+  const tbody = document.getElementById('table-body');
+  const filtered = currentFilter === 'all'
+    ? allRows
+    : allRows.filter(r => r.score === currentFilter);
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="no-data"><div class="icon">📭</div>Aucun prospect' +
+      (agenceCode ? ' pour ' + agenceCode : '') + '</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(r => {
+    const cls  = r.score === 'Chaud' ? 'badge-chaud' : r.score === 'Tiède' ? 'badge-tiede' : 'badge-froid';
+    const icon = r.score === 'Chaud' ? '🔥' : r.score === 'Tiède' ? '⚡' : '❄️';
+    return '<tr>' +
+      '<td><span class="badge ' + cls + '">' + icon + ' ' + r.score + '</span></td>' +
+      '<td><strong>' + esc(r.nom) + '</strong></td>' +
+      '<td>' + esc(r.ville) + '</td>' +
+      '<td>' + esc(r.horizon) + '</td>' +
+      '<td>' + esc(r.budget) + '</td>' +
+    '</tr>';
+  }).join('');
 }
 
-loadData();
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function setFilter(val, btn) {
+  currentFilter = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function setStatus(msg, loading) {
+  document.getElementById('status-msg').textContent = msg;
+  const icon = document.getElementById('refresh-icon');
+  const btn  = document.getElementById('btn-refresh');
+  icon.className = loading ? 'spin' : '';
+  icon.textContent = '↻';
+  btn.disabled = loading;
+}
+
+function showError(msg) {
+  const box = document.getElementById('error-box');
+  box.style.display = 'block';
+  box.textContent = msg;
+}
+function hideError() {
+  document.getElementById('error-box').style.display = 'none';
+}
+function showDebug(msg) {
+  // Activer en ajoutant ?debug=1 dans l'URL
+  const params = new URLSearchParams(window.location.search);
+  if (!params.get('debug')) return;
+  const box = document.getElementById('debug-box');
+  box.style.display = 'block';
+  box.textContent = msg;
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 </script>
 
 </body>
