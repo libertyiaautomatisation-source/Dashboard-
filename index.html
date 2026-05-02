@@ -8,16 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue: #3B5BDB;
-    --blue-light: #4C6EF5;
-    --blue-dark: #2241C7;
-    --chaud: #FF6B35;
-    --tiede: #F59F00;
-    --froid: #339AF0;
-    --bg: #F0F4FF;
+    --blue: #1E3A8A;
+    --blue-light: #2563EB;
+    --blue-dark: #1E3A8A;
+    --chaud: #DC2626;
+    --tiede: #D97706;
+    --froid: #2563EB;
+    --bg: #F8FAFC;
     --card: #FFFFFF;
-    --text: #1A1F36;
-    --muted: #6B7280;
+    --text: #0F172A;
+    --muted: #64748B;
     --border: #E2E8F0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +30,7 @@
 
 /* HEADER */
 header {
-background: var(–blue);
+background: #1E3A8A;
 padding: 18px 24px;
 display: flex;
 align-items: center;
@@ -45,21 +45,21 @@ border-radius: 10px;
 display: flex; align-items: center; justify-content: center;
 font-family: ‘Syne’, sans-serif;
 font-weight: 800; font-size: 16px;
-color: var(–blue);
+color: #1E3A8A;
 flex-shrink: 0;
 }
 .header-title { font-family: ‘Syne’, sans-serif; color: white; }
-.header-title h1 { font-size: 18px; font-weight: 700; line-height: 1.1; }
-.header-title p { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+.header-title h1 { font-size: 18px; font-weight: 700; line-height: 1.1; color: white; }
+.header-title p { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 2px; }
 #agence-badge {
-background: rgba(255,255,255,0.2);
-color: white;
+background: white;
+color: #1E3A8A;
 font-family: ‘Syne’, sans-serif;
-font-weight: 700;
+font-weight: 800;
 font-size: 13px;
-padding: 5px 12px;
+padding: 5px 14px;
 border-radius: 20px;
-letter-spacing: 0.05em;
+letter-spacing: 0.08em;
 }
 
 /* MAIN */
@@ -290,12 +290,13 @@ const COL = {
   agence     : 10   // K
 };
 
-// Score basé sur l'horizon
+// Score basé sur l'horizon — options exactes du formulaire
 function scoreFromHorizon(h) {
   if (!h) return 'Froid';
-  const s = h.toLowerCase();
-  if (s.includes('immédiat') || s.includes('urgent') || s.includes('1 mois') || s.includes('moins')) return 'Chaud';
-  if (s.includes('1') || s.includes('2') || s.includes('3') || s.includes('mois')) return 'Tiède';
+  const s = h.toLowerCase().trim();
+  if (s.includes('immédiatement') || s.includes('immediat')) return 'Chaud';
+  if (s.includes('1-3') || s.includes('1 à 3') || s.includes('1-3 mois')) return 'Tiède';
+  if (s.includes('3-6') || s.includes('3 à 6') || s.includes('3-6 mois')) return 'Froid';
   return 'Froid';
 }
 
