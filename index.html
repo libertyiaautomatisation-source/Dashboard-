@@ -79,13 +79,14 @@ padding: 8px 16px;
 border-radius: 20px;
 font-family: ‘DM Sans’, sans-serif;
 font-size: 13px;
-font-weight: 500;
+font-weight: 600;
 cursor: pointer;
 display: flex; align-items: center; gap: 6px;
 transition: background 0.2s;
+opacity: 1 !important;
 }
 #btn-refresh:hover { background: var(–blue-dark); }
-#btn-refresh:disabled { opacity: 0.5; cursor: not-allowed; }
+#btn-refresh:disabled { background: #93A4E0; cursor: not-allowed; }
 .spin { display: inline-block; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -134,7 +135,7 @@ transition: all 0.15s;
 .filter-btn:hover { border-color: var(–blue); color: var(–blue); }
 .filter-btn.active { background: var(–blue); border-color: var(–blue); color: white; font-weight: 600; }
 .filter-btn.f-chaud.active { background: var(–chaud); border-color: var(–chaud); color: white; }
-.filter-btn.f-tiede.active { background: var(–tiede); border-color: var(–tiede); color: white; }
+.filter-btn.f-tiede.active { background: var(–tiede); border-color: var(–tiede); color: #7A4F00; font-weight: 700; }
 .filter-btn.f-froid.active { background: var(–froid); border-color: var(–froid); color: white; }
 
 /* TABLE */
@@ -171,7 +172,7 @@ padding: 3px 9px; border-radius: 20px;
 font-size: 11px; font-weight: 600;
 }
 .badge-chaud { background: var(–chaud); color: white; }
-.badge-tiede { background: var(–tiede); color: white; }
+.badge-tiede { background: var(–tiede); color: #7A4F00; }
 .badge-froid { background: var(–froid); color: white; }
 
 .no-data {
