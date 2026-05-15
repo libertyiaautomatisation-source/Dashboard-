@@ -1,340 +1,627 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Prospects – Liberty IA</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --blue: #1E3A8A;
-    --blue-light: #2563EB;
-    --chaud: #DC2626;
-    --tiede: #D97706;
-    --froid: #2563EB;
-    --vendeur: #059669;
-    --bg: #F8FAFC;
-    --card: #FFFFFF;
-    --text: #0F172A;
-    --muted: #64748B;
-    --border: #E2E8F0;
+
+:root{
+  --blue:#1E3A8A;
+  --blue-light:#2563EB;
+  --chaud:#DC2626;
+  --tiede:#D97706;
+  --froid:#2563EB;
+  --vendeur:#059669;
+  --bg:#F8FAFC;
+  --card:#FFFFFF;
+  --text:#0F172A;
+  --muted:#64748B;
+  --border:#E2E8F0;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  width:100%;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* ================= HEADER ================= */
+
+header{
+  background:#1E3A8A;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-mark{
+  width:34px;
+  height:34px;
+  background:white;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:13px;
+  color:#1E3A8A;
+  flex-shrink:0;
+}
+
+.header-title h1{
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:white;
+}
+
+.header-title p{
+  font-size:11px;
+  color:rgba(255,255,255,0.8);
+  margin-top:1px;
+}
+
+#agence-badge{
+  background:white;
+  color:#1E3A8A;
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:12px;
+  padding:4px 11px;
+  border-radius:20px;
+  letter-spacing:0.08em;
+  white-space:nowrap;
+}
+
+/* ================= MAIN ================= */
+
+main{
+  padding:14px 10px 40px;
+  width:100%;
+  max-width:100%;
+  margin:0 auto;
+  overflow-x:hidden;
+}
+
+/* ================= STATUS ================= */
+
+#status-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  gap:8px;
+}
+
+#status-msg{
+  font-size:12px;
+  color:var(--muted);
+}
+
+#btn-refresh{
+  background:var(--blue);
+  color:white;
+  border:none;
+  padding:7px 13px;
+  border-radius:20px;
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+#btn-refresh:disabled{
+  background:#93A4E0 !important;
+  cursor:not-allowed;
+}
+
+.spin{
+  display:inline-block;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-header {
-background: #1E3A8A; padding: 14px 16px;
-display: flex; align-items: center; justify-content: space-between; gap: 10px;
-}
-.header-left { display: flex; align-items: center; gap: 10px; }
-.logo-mark {
-width: 34px; height: 34px; background: white; border-radius: 8px;
-display: flex; align-items: center; justify-content: center;
-font-family: ‘Syne’, sans-serif; font-weight: 800; font-size: 13px; color: #1E3A8A; flex-shrink: 0;
-}
-.header-title h1 { font-family: ‘Syne’, sans-serif; font-size: 15px; font-weight: 700; color: white; }
-.header-title p  { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 1px; }
-#agence-badge {
-background: white; color: #1E3A8A; font-family: ‘Syne’, sans-serif;
-font-weight: 800; font-size: 12px; padding: 4px 11px; border-radius: 20px;
-letter-spacing: 0.08em; white-space: nowrap;
 }
 
-main { padding: 14px 12px 40px; max-width: 480px; margin: 0 auto; }
+/* ================= TITLES ================= */
 
-#status-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 8px; }
-#status-msg  { font-size: 12px; color: var(–muted); }
-#btn-refresh {
-background: var(–blue); color: white; border: none; padding: 7px 13px;
-border-radius: 20px; font-family: ‘DM Sans’, sans-serif; font-size: 12px;
-font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0;
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
-#btn-refresh:disabled { background: #93A4E0 !important; cursor: not-allowed; }
-.spin { display: inline-block; animation: spin 1s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
 
-.section-title {
-font-family: ‘Syne’, sans-serif; font-size: 14px; font-weight: 700;
-color: var(–text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+.pill{
+  font-size:10px;
+  font-weight:700;
+  padding:2px 7px;
+  border-radius:20px;
+  background:var(--blue);
+  color:white;
 }
-.pill { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: var(–blue); color: white; }
-.pill-green { background: var(–vendeur); }
 
-.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-.stat-card { background: var(–card); border-radius: 12px; padding: 12px 10px; text-align: center; border: 1px solid var(–border); }
-.stat-icon  { font-size: 18px; margin-bottom: 3px; }
-.stat-value { font-family: ‘Syne’, sans-serif; font-size: 24px; font-weight: 800; line-height: 1; }
-.stat-label { font-size: 10px; color: var(–muted); margin-top: 3px; }
-.card-total .stat-value { color: var(–blue); }
-.card-chaud .stat-value { color: var(–chaud); }
-.card-tiede .stat-value { color: var(–tiede); }
-.card-froid .stat-value { color: var(–froid); }
-
-.card-vendeur {
-background: linear-gradient(135deg,#ECFDF5,#D1FAE5); border-radius: 12px;
-padding: 12px 14px; border: 1px solid #A7F3D0;
-display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+.pill-green{
+  background:var(--vendeur);
 }
-.card-vendeur .v-icon  { font-size: 26px; }
-.card-vendeur .v-value { font-family: ‘Syne’, sans-serif; font-size: 28px; font-weight: 800; color: var(–vendeur); line-height: 1; }
-.card-vendeur .v-label { font-size: 11px; color: #065F46; margin-top: 2px; }
 
-.filters { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.filter-btn {
-border: 1.5px solid var(–border); background: var(–card); color: var(–muted);
-padding: 5px 11px; border-radius: 20px; font-size: 12px; font-family: ‘DM Sans’, sans-serif; cursor: pointer;
+/* ================= STATS ================= */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-bottom:14px;
+  width:100%;
 }
-.filter-btn.active           { background: var(–blue);  border-color: var(–blue);  color: white; font-weight: 600; }
-.filter-btn.f-chaud.active   { background: var(–chaud); border-color: var(–chaud); }
-.filter-btn.f-tiede.active   { background: var(–tiede); border-color: var(–tiede); color: #7A4F00; }
-.filter-btn.f-froid.active   { background: var(–froid); border-color: var(–froid); }
 
-.table-wrap {
-background: var(–card); border-radius: 14px; border: 1px solid var(–border);
-overflow: hidden; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 6px;
+.stat-card{
+  background:var(--card);
+  border-radius:12px;
+  padding:12px 10px;
+  text-align:center;
+  border:1px solid var(--border);
 }
-table { width: 100%; border-collapse: collapse; }
-thead { background: #F8FAFF; }
-.table-wrap-vendeurs thead { background: #F0FDF4; }
-th {
-padding: 9px 8px; text-align: left; font-size: 10px; font-weight: 700;
-text-transform: uppercase; letter-spacing: 0.05em; color: var(–muted);
-border-bottom: 1px solid var(–border); white-space: nowrap;
+
+.stat-icon{
+  font-size:18px;
+  margin-bottom:3px;
 }
-.table-wrap-vendeurs th { color: #065F46; }
-td {
-padding: 9px 8px; font-size: 12px; border-bottom: 1px solid #F1F5F9;
-vertical-align: middle;
+
+.stat-value{
+  font-family:'Syne',sans-serif;
+  font-size:24px;
+  font-weight:800;
+  line-height:1;
 }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: #F8FAFF; }
-.table-wrap-vendeurs tr:hover td { background: #F0FDF4; }
 
-/* Acquéreurs — 4 colonnes */
-#tbl-acq { table-layout: fixed; }
-#tbl-acq .col-score   { width: 72px; }
-#tbl-acq .col-nom     { width: 30%; }
-#tbl-acq .col-ville   { width: 25%; }
-#tbl-acq .col-horizon { width: auto; }
-#tbl-acq td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stat-label{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px;
+}
 
-/* Vendeurs — 5 colonnes : table-layout auto pour s’adapter */
-#tbl-ven { table-layout: auto; min-width: 340px; }
-#tbl-ven .col-vnom   { min-width: 85px; }
-#tbl-ven .col-vtype  { min-width: 75px; }
-#tbl-ven .col-vville { min-width: 55px; }
-#tbl-ven .col-vprix  { min-width: 60px; white-space: nowrap; }
-#tbl-ven .col-vdate  { min-width: 48px; white-space: nowrap; }
-#tbl-ven .col-vnom td, #tbl-ven .col-vville td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-total .stat-value{
+  color:var(--blue);
+}
 
-.badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
-.badge-chaud { background: var(–chaud); color: white; }
-.badge-tiede { background: var(–tiede); color: #7A4F00; }
-.badge-froid { background: var(–froid); color: white; }
-.badge-type  { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 10px; padding: 2px 6px; border-radius: 20px; white-space: nowrap; }
-.prix-cell { font-weight: 600; font-size: 11px; white-space: nowrap; }
-.date-cell { font-size: 10px; color: var(–muted); white-space: nowrap; }
-.nom-cell  { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 0; }
+.card-chaud .stat-value{
+  color:var(--chaud);
+}
 
-.no-data { text-align: center; padding: 28px 12px; color: var(–muted); font-size: 12px; }
-.no-data .icon { font-size: 28px; margin-bottom: 6px; }
-.section-divider { height: 1px; background: var(–border); margin: 22px 0 16px; }
+.card-tiede .stat-value{
+  color:var(--tiede);
+}
 
-#error-box { background:#FEF2F2; border:1px solid #FECACA; border-radius:10px; padding:12px; font-size:12px; color:#DC2626; margin-bottom:12px; display:none; }
-#debug-box { background:#1A1F36; color:#A5B4FC; border-radius:10px; padding:12px; font-size:10px; font-family:monospace; margin-bottom:12px; display:none; word-break:break-all; white-space:pre-wrap; }
+.card-froid .stat-value{
+  color:var(--froid);
+}
+
+/* ================= VENDEURS CARD ================= */
+
+.card-vendeur{
+  background:linear-gradient(135deg,#ECFDF5,#D1FAE5);
+  border-radius:12px;
+  padding:12px 14px;
+  border:1px solid #A7F3D0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+  width:100%;
+}
+
+.card-vendeur .v-icon{
+  font-size:26px;
+}
+
+.card-vendeur .v-value{
+  font-family:'Syne',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  color:var(--vendeur);
+  line-height:1;
+}
+
+.card-vendeur .v-label{
+  font-size:11px;
+  color:#065F46;
+  margin-top:2px;
+}
+
+/* ================= FILTERS ================= */
+
+.filters{
+  display:flex;
+  gap:6px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  border:1.5px solid var(--border);
+  background:var(--card);
+  color:var(--muted);
+  padding:5px 11px;
+  border-radius:20px;
+  font-size:12px;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+}
+
+.filter-btn.active{
+  background:var(--blue);
+  border-color:var(--blue);
+  color:white;
+  font-weight:600;
+}
+
+.filter-btn.f-chaud.active{
+  background:var(--chaud);
+  border-color:var(--chaud);
+}
+
+.filter-btn.f-tiede.active{
+  background:var(--tiede);
+  border-color:var(--tiede);
+  color:#7A4F00;
+}
+
+.filter-btn.f-froid.active{
+  background:var(--froid);
+  border-color:var(--froid);
+}
+
+/* ================= TABLES ================= */
+
+.table-wrap{
+  width:100%;
+  background:var(--card);
+  border-radius:14px;
+  border:1px solid var(--border);
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin-bottom:6px;
+}
+
+table{
+  width:100%;
+  min-width:100%;
+  border-collapse:collapse;
+}
+
+thead{
+  background:#F8FAFF;
+}
+
+.table-wrap-vendeurs thead{
+  background:#F0FDF4;
+}
+
+th{
+  padding:9px 8px;
+  text-align:left;
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+
+.table-wrap-vendeurs th{
+  color:#065F46;
+}
+
+td{
+  padding:9px 8px;
+  font-size:12px;
+  border-bottom:1px solid #F1F5F9;
+  vertical-align:middle;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+tr:last-child td{
+  border-bottom:none;
+}
+
+tr:hover td{
+  background:#F8FAFF;
+}
+
+.table-wrap-vendeurs tr:hover td{
+  background:#F0FDF4;
+}
+
+/* ================= ACQUEREURS ================= */
+
+#tbl-acq{
+  table-layout:auto;
+}
+
+#tbl-acq th,
+#tbl-acq td{
+  font-size:11px;
+  padding:8px 6px;
+}
+
+/* ================= VENDEURS ================= */
+
+#tbl-ven{
+  table-layout:fixed;
+  width:100%;
+}
+
+#tbl-ven th,
+#tbl-ven td{
+  font-size:11px;
+  padding:8px 5px;
+}
+
+#tbl-ven .col-vnom{
+  width:28%;
+}
+
+#tbl-ven .col-vtype{
+  width:24%;
+}
+
+#tbl-ven .col-vville{
+  width:18%;
+}
+
+#tbl-ven .col-vprix{
+  width:18%;
+}
+
+#tbl-ven .col-vdate{
+  width:12%;
+}
+
+/* ================= BADGES ================= */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:2px 6px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.badge-chaud{
+  background:var(--chaud);
+  color:white;
+}
+
+.badge-tiede{
+  background:var(--tiede);
+  color:#7A4F00;
+}
+
+.badge-froid{
+  background:var(--froid);
+  color:white;
+}
+
+.badge-type{
+  background:#ECFDF5;
+  color:#065F46;
+  border:1px solid #A7F3D0;
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+
+/* ================= CELLS ================= */
+
+.prix-cell{
+  font-weight:600;
+  font-size:11px;
+}
+
+.date-cell{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.no-data{
+  text-align:center;
+  padding:28px 12px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.no-data .icon{
+  font-size:28px;
+  margin-bottom:6px;
+}
+
+.section-divider{
+  height:1px;
+  background:var(--border);
+  margin:22px 0 16px;
+}
+
+/* ================= BOXES ================= */
+
+#error-box{
+  background:#FEF2F2;
+  border:1px solid #FECACA;
+  border-radius:10px;
+  padding:12px;
+  font-size:12px;
+  color:#DC2626;
+  margin-bottom:12px;
+  display:none;
+}
+
+#debug-box{
+  background:#1A1F36;
+  color:#A5B4FC;
+  border-radius:10px;
+  padding:12px;
+  font-size:10px;
+  font-family:monospace;
+  margin-bottom:12px;
+  display:none;
+  word-break:break-all;
+  white-space:pre-wrap;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:430px){
+
+  .header-title h1{
+    font-size:14px;
+  }
+
+  .header-title p{
+    font-size:10px;
+  }
+
+  #agence-badge{
+    font-size:10px;
+    padding:4px 8px;
+  }
+
+  .stat-value{
+    font-size:22px;
+  }
+
+  .filters{
+    gap:5px;
+  }
+
+  .filter-btn{
+    font-size:11px;
+    padding:5px 9px;
+  }
+
+  #tbl-acq th,
+  #tbl-acq td,
+  #tbl-ven th,
+  #tbl-ven td{
+    font-size:10px;
+    padding:7px 4px;
+  }
+
+}
+
 </style>
-
 </head>
+
 <body>
 
 <header>
   <div class="header-left">
     <div class="logo-mark">LIA</div>
+
     <div class="header-title">
       <h1>Dashboard Prospects</h1>
       <p>Liberty IA Automatisation</p>
     </div>
   </div>
+
   <div id="agence-badge">—</div>
 </header>
 
 <main>
+
   <div id="status-bar">
     <span id="status-msg">Chargement...</span>
-    <button id="btn-refresh" onclick="loadAll()"><span id="refresh-icon">↻</span> Actualiser</button>
+
+    <button id="btn-refresh" onclick="loadAll()">
+      <span id="refresh-icon">↻</span>
+      Actualiser
+    </button>
   </div>
+
   <div id="error-box"></div>
   <div id="debug-box"></div>
 
-  <div class="section-title">🏠 Acquéreurs <span class="pill" id="pill-acquereurs">0</span></div>
+  <!-- ACQUEREURS -->
+
+  <div class="section-title">
+    🏠 Acquéreurs
+    <span class="pill" id="pill-acquereurs">0</span>
+  </div>
 
   <div class="stats-grid">
-    <div class="stat-card card-total"><div class="stat-icon">📋</div><div class="stat-value" id="count-total">0</div><div class="stat-label">Total leads</div></div>
-    <div class="stat-card card-chaud"><div class="stat-icon">🔥</div><div class="stat-value" id="count-chaud">0</div><div class="stat-label">Chauds</div></div>
-    <div class="stat-card card-tiede"><div class="stat-icon">⚡</div><div class="stat-value" id="count-tiede">0</div><div class="stat-label">Tièdes</div></div>
-    <div class="stat-card card-froid"><div class="stat-icon">❄️</div><div class="stat-value" id="count-froid">0</div><div class="stat-label">Froids</div></div>
+
+    <div class="stat-card card-total">
+      <div class="stat-icon">📋</div>
+      <div class="stat-value" id="count-total">0</div>
+      <div class="stat-label">Total leads</div>
+    </div>
+
+    <div class="stat-card card-chaud">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-value" id="count-chaud">0</div>
+      <div class="stat-label">Chauds</div>
+    </div>
+
+    <div class="stat-card card-tiede">
+      <div class="stat-icon">⚡</div>
+      <div class="stat-value" id="count-tiede">0</div>
+      <div class="stat-label">Tièdes</div>
+    </div>
+
+    <div class="stat-card card-froid">
+      <div class="stat-icon">❄️</div>
+      <div class="stat-value" id="count-froid">0</div>
+      <div class="stat-label">Froids</div>
+    </div>
+
   </div>
 
-  <div class="filters">
-    <button class="filter-btn active" onclick="setFilter('all',this)">Tous</button>
-    <button class="filter-btn f-chaud" onclick="setFilter('Chaud',this)">🔥 Chauds</button>
-    <button class="filter-btn f-tiede" onclick="setFilter('Tiède',this)">⚡ Tièdes</button>
-    <button class="filter-btn f-froid" onclick="setFilter('Froid',this)">❄️ Froids</button>
-  </div>
-
-  <div class="table-wrap">
-    <table id="tbl-acq">
-      <thead><tr>
-        <th class="col-score">Score</th>
-        <th class="col-nom">Nom</th>
-        <th class="col-ville">Ville</th>
-        <th class="col-horizon">Horizon</th>
-      </tr></thead>
-      <tbody id="table-body"><tr><td colspan="4" class="no-data"><div class="icon">⏳</div>Chargement...</td></tr></tbody>
-    </table>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <div class="section-title">🏷️ Vendeurs <span class="pill pill-green" id="pill-vendeurs">0</span></div>
-
-  <div class="card-vendeur">
-    <div class="v-icon">🏡</div>
-    <div><div class="v-value" id="count-vendeurs">0</div><div class="v-label">Biens à vendre enregistrés</div></div>
-  </div>
-
-  <div class="table-wrap table-wrap-vendeurs">
-    <table id="tbl-ven">
-      <thead><tr>
-        <th class="col-vnom">Nom</th>
-        <th class="col-vtype">Type</th>
-        <th class="col-vville">Ville</th>
-        <th class="col-vprix">Prix</th>
-        <th class="col-vdate">Date</th>
-      </tr></thead>
-      <tbody id="table-body-vendeurs"><tr><td colspan="5" class="no-data"><div class="icon">⏳</div>Chargement...</td></tr></tbody>
-    </table>
-  </div>
 </main>
-
-<script>
-const SHEET_ID_ACQ='1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc', SHEET_NAME_ACQ='Réponses au formulaire 2';
-const SHEET_ID_VEN='1m5WbIcjuj3LgsHnXO3rmxO2X5bdkCJ0-4mM6K3bs0XI', SHEET_NAME_VEN='Vendeurs';
-const COL_ACQ={nom:1,ville:5,budget:6,horizon:7,refDossier:9,agence:10};
-const COL_VEN={horodateur:0,nom:1,type:4,adresse:5,prix:6,refDossier:10};
-
-function scoreFromHorizon(h){
-  if(!h)return'Froid'; const s=h.toLowerCase();
-  if(s.includes('immédiatement')||s.includes('immediat')||s.includes('le plus vite'))return'Chaud';
-  if(s.includes('1-3')||s.includes('1 à 3'))return'Tiède';
-  return'Froid';
-}
-function villeFromAdresse(a){
-  if(!a)return'—';
-  const m=a.match(/\b\d{4,5}\s+([A-ZÀ-Ÿa-zà-ÿ][a-zà-ÿA-ZÀ-Ÿ\s\-]+)$/);
-  if(m)return m[1].trim().split(' ')[0];
-  const p=a.trim().split(/\s+/); return p[p.length-1]||a;
-}
-function formatDate(raw){
-  if(!raw)return'—';
-  const dm=String(raw).match(/Date\((\d+),(\d+),(\d+)/);
-  if(dm){const d=new Date(+dm[1],+dm[2],+dm[3]);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});}
-  try{const d=new Date(raw);if(!isNaN(d))return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});}catch(e){}
-  return String(raw).substring(0,10);
-}
-function formatPrix(p){
-  if(!p||p==='—')return'—';
-  const n=parseInt(String(p).replace(/\s/g,'').replace(/[^\d]/g,''));
-  if(isNaN(n))return p;
-  if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M€';
-  if(n>=1000)return Math.round(n/1000)+'k€';
-  return n+'€';
-}
-
-let allAcq=[],allVen=[],filter='all',agenceCode='',loaded=0;
-
-document.addEventListener('DOMContentLoaded',()=>{
-  const p=new URLSearchParams(window.location.search);
-  agenceCode=(p.get('agence')||'').trim().toUpperCase();
-  document.getElementById('agence-badge').textContent=agenceCode||'TOUTES';
-  loadAll();
-});
-
-function loadAll(){setStatus('Chargement…',true);hideError();loaded=0;loadGviz(SHEET_ID_ACQ,SHEET_NAME_ACQ,'acq');loadGviz(SHEET_ID_VEN,SHEET_NAME_VEN,'ven');}
-
-function done(){loaded++;if(loaded>=2){renderStats();renderTable();renderVendeurs();setStatus('Mis à jour · '+new Date().toLocaleTimeString('fr-FR'),false);}}
-
-function loadGviz(id,name,tag){
-  const cb='lia_'+tag+'_'+Date.now();
-  const src='https://docs.google.com/spreadsheets/d/'+id+'/gviz/tq?tqx=responseHandler:'+cb+'&sheet='+encodeURIComponent(name);
-  window[cb]=function(data){clearTimeout(t);delete window[cb];if(el.parentNode)el.parentNode.removeChild(el);if(tag==='acq')parseAcq(data);else parseVen(data);done();};
-  const el=document.createElement('script'); el.src=src;
-  el.onerror=()=>{showError('Erreur ('+tag+')');setStatus('Erreur',false);};
-  const t=setTimeout(()=>{delete window[cb];if(el.parentNode)el.parentNode.removeChild(el);showError('Délai ('+tag+')');setStatus('Erreur',false);},12000);
-  document.head.appendChild(el);
-}
-
-function parseAcq(data){
-  try{allAcq=[];(data.table?data.table.rows:[]).forEach(row=>{
-    if(!row||!row.c)return;
-    const g=i=>(!row.c[i]||row.c[i].v==null)?'':String(row.c[i].v).trim();
-    const ref=g(COL_ACQ.refDossier).toUpperCase(), agv=g(COL_ACQ.agence).toUpperCase();
-    if(agenceCode&&ref!==agenceCode&&agv!==agenceCode)return;
-    const h=g(COL_ACQ.horizon);
-    allAcq.push({nom:g(COL_ACQ.nom)||'Anonyme',ville:g(COL_ACQ.ville)||'—',horizon:h||'—',score:scoreFromHorizon(h)});
-  });}catch(e){showError('Err acq:'+e.message);}
-}
-
-function parseVen(data){
-  try{allVen=[];(data.table?data.table.rows:[]).forEach(row=>{
-    if(!row||!row.c)return;
-    const g=i=>(!row.c[i]||row.c[i].v==null)?'':String(row.c[i].v).trim();
-    const gr=i=>(!row.c[i]||row.c[i].v==null)?'':row.c[i].v;
-    const ref=g(COL_VEN.refDossier).toUpperCase();
-    if(agenceCode&&ref!==agenceCode)return;
-    allVen.push({nom:g(COL_VEN.nom)||'Anonyme',type:g(COL_VEN.type)||'—',ville:villeFromAdresse(g(COL_VEN.adresse)),prix:g(COL_VEN.prix)||'—',date:gr(COL_VEN.horodateur)});
-  });}catch(e){showError('Err ven:'+e.message);}
-}
-
-function renderStats(){
-  const c=allAcq.filter(r=>r.score==='Chaud').length, t=allAcq.filter(r=>r.score==='Tiède').length, f=allAcq.filter(r=>r.score==='Froid').length, tot=allAcq.length;
-  document.getElementById('count-total').textContent=tot; document.getElementById('count-chaud').textContent=c;
-  document.getElementById('count-tiede').textContent=t;   document.getElementById('count-froid').textContent=f;
-  document.getElementById('pill-acquereurs').textContent=tot;
-}
-
-function renderTable(){
-  const tbody=document.getElementById('table-body');
-  const rows=filter==='all'?allAcq:allAcq.filter(r=>r.score===filter);
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="4" class="no-data"><div class="icon">📭</div>Aucun acquéreur'+(agenceCode?' pour '+agenceCode:'')+'</td></tr>';return;}
-  tbody.innerHTML=rows.map(r=>{
-    const cls=r.score==='Chaud'?'badge-chaud':r.score==='Tiède'?'badge-tiede':'badge-froid';
-    const ic=r.score==='Chaud'?'🔥':r.score==='Tiède'?'⚡':'❄️';
-    return'<tr><td><span class="badge '+cls+'">'+ic+' '+r.score+'</span></td><td><strong>'+esc(r.nom)+'</strong></td><td>'+esc(r.ville)+'</td><td>'+esc(r.horizon)+'</td></tr>';
-  }).join('');
-}
-
-function renderVendeurs(){
-  const tot=allVen.length;
-  document.getElementById('count-vendeurs').textContent=tot;
-  document.getElementById('pill-vendeurs').textContent=tot;
-  const tbody=document.getElementById('table-body-vendeurs');
-  if(!tot){tbody.innerHTML='<tr><td colspan="5" class="no-data"><div class="icon">🏡</div>Aucun vendeur'+(agenceCode?' pour '+agenceCode:'')+'</td></tr>';return;}
-  tbody.innerHTML=allVen.map(r=>'<tr>'
-    +'<td style="max-width:85px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><strong>'+esc(r.nom)+'</strong></td>'
-    +'<td><span class="badge-type">'+esc(r.type)+'</span></td>'
-    +'<td style="max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(r.ville)+'</td>'
-    +'<td class="prix-cell">'+formatPrix(r.prix)+'</td>'
-    +'<td class="date-cell">'+formatDate(r.date)+'</td>'
-    +'</tr>').join('');
-}
-
-function setFilter(val,btn){filter=val;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
-function setStatus(msg,loading){document.getElementById('status-msg').textContent=msg;const ic=document.getElementById('refresh-icon'),btn=document.getElementById('btn-refresh');ic.className=loading?'spin':'';ic.textContent='↻';btn.disabled=loading;btn.style.background=loading?'#93A4E0':'#1E3A8A';}
-function showError(msg){const b=document.getElementById('error-box');b.style.display='block';b.textContent=msg;}
-function hideError(){document.getElementById('error-box').style.display='none';}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-</script>
 
 </body>
 </html>
