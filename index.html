@@ -93,43 +93,48 @@ padding: 5px 11px; border-radius: 20px; font-size: 12px; font-family: ‘DM Sans
 background: var(–card); border-radius: 14px; border: 1px solid var(–border);
 overflow: hidden; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 6px;
 }
-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+table { width: 100%; border-collapse: collapse; }
 thead { background: #F8FAFF; }
 .table-wrap-vendeurs thead { background: #F0FDF4; }
 th {
 padding: 9px 8px; text-align: left; font-size: 10px; font-weight: 700;
 text-transform: uppercase; letter-spacing: 0.05em; color: var(–muted);
-border-bottom: 1px solid var(–border); white-space: nowrap; overflow: hidden;
+border-bottom: 1px solid var(–border); white-space: nowrap;
 }
 .table-wrap-vendeurs th { color: #065F46; }
 td {
 padding: 9px 8px; font-size: 12px; border-bottom: 1px solid #F1F5F9;
-vertical-align: middle; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+vertical-align: middle;
 }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #F8FAFF; }
 .table-wrap-vendeurs tr:hover td { background: #F0FDF4; }
 
-/* Acquéreurs — 4 colonnes, sans Budget */
+/* Acquéreurs — 4 colonnes */
+#tbl-acq { table-layout: fixed; }
 #tbl-acq .col-score   { width: 72px; }
 #tbl-acq .col-nom     { width: 30%; }
 #tbl-acq .col-ville   { width: 25%; }
 #tbl-acq .col-horizon { width: auto; }
+#tbl-acq td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* Vendeurs — 5 colonnes */
-#tbl-ven .col-vnom   { width: 28%; }
-#tbl-ven .col-vtype  { width: 26%; }
-#tbl-ven .col-vville { width: 18%; }
-#tbl-ven .col-vprix  { width: 18%; }
-#tbl-ven .col-vdate  { width: auto; }
+/* Vendeurs — 5 colonnes : table-layout auto pour s’adapter */
+#tbl-ven { table-layout: auto; min-width: 340px; }
+#tbl-ven .col-vnom   { min-width: 85px; }
+#tbl-ven .col-vtype  { min-width: 75px; }
+#tbl-ven .col-vville { min-width: 55px; }
+#tbl-ven .col-vprix  { min-width: 60px; white-space: nowrap; }
+#tbl-ven .col-vdate  { min-width: 48px; white-space: nowrap; }
+#tbl-ven .col-vnom td, #tbl-ven .col-vville td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
 .badge-chaud { background: var(–chaud); color: white; }
 .badge-tiede { background: var(–tiede); color: #7A4F00; }
 .badge-froid { background: var(–froid); color: white; }
 .badge-type  { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 10px; padding: 2px 6px; border-radius: 20px; white-space: nowrap; }
-.prix-cell { font-weight: 600; font-size: 11px; }
-.date-cell { font-size: 10px; color: var(–muted); }
+.prix-cell { font-weight: 600; font-size: 11px; white-space: nowrap; }
+.date-cell { font-size: 10px; color: var(–muted); white-space: nowrap; }
+.nom-cell  { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 0; }
 
 .no-data { text-align: center; padding: 28px 12px; color: var(–muted); font-size: 12px; }
 .no-data .icon { font-size: 28px; margin-bottom: 6px; }
@@ -237,6 +242,14 @@ function formatDate(raw){
   try{const d=new Date(raw);if(!isNaN(d))return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});}catch(e){}
   return String(raw).substring(0,10);
 }
+function formatPrix(p){
+  if(!p||p==='—')return'—';
+  const n=parseInt(String(p).replace(/\s/g,'').replace(/[^\d]/g,''));
+  if(isNaN(n))return p;
+  if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M€';
+  if(n>=1000)return Math.round(n/1000)+'k€';
+  return n+'€';
+}
 
 let allAcq=[],allVen=[],filter='all',agenceCode='',loaded=0;
 
@@ -307,7 +320,13 @@ function renderVendeurs(){
   document.getElementById('pill-vendeurs').textContent=tot;
   const tbody=document.getElementById('table-body-vendeurs');
   if(!tot){tbody.innerHTML='<tr><td colspan="5" class="no-data"><div class="icon">🏡</div>Aucun vendeur'+(agenceCode?' pour '+agenceCode:'')+'</td></tr>';return;}
-  tbody.innerHTML=allVen.map(r=>'<tr><td><strong>'+esc(r.nom)+'</strong></td><td><span class="badge-type">'+esc(r.type)+'</span></td><td>'+esc(r.ville)+'</td><td class="prix-cell">'+esc(r.prix)+'</td><td class="date-cell">'+formatDate(r.date)+'</td></tr>').join('');
+  tbody.innerHTML=allVen.map(r=>'<tr>'
+    +'<td style="max-width:85px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><strong>'+esc(r.nom)+'</strong></td>'
+    +'<td><span class="badge-type">'+esc(r.type)+'</span></td>'
+    +'<td style="max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(r.ville)+'</td>'
+    +'<td class="prix-cell">'+formatPrix(r.prix)+'</td>'
+    +'<td class="date-cell">'+formatDate(r.date)+'</td>'
+    +'</tr>').join('');
 }
 
 function setFilter(val,btn){filter=val;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
