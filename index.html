@@ -9,7 +9,6 @@
   :root {
     --blue: #1E3A8A;
     --blue-light: #2563EB;
-    --blue-dark: #1E3A8A;
     --chaud: #DC2626;
     --tiede: #D97706;
     --froid: #2563EB;
@@ -21,244 +20,123 @@
     --border: #E2E8F0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-/* HEADER */
 header {
-background: #1E3A8A;
-padding: 18px 24px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 12px;
+background: #1E3A8A; padding: 14px 16px;
+display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
-.header-left { display: flex; align-items: center; gap: 12px; }
+.header-left { display: flex; align-items: center; gap: 10px; }
 .logo-mark {
-width: 38px; height: 38px;
-background: white;
-border-radius: 10px;
+width: 34px; height: 34px; background: white; border-radius: 8px;
 display: flex; align-items: center; justify-content: center;
-font-family: ‘Syne’, sans-serif;
-font-weight: 800; font-size: 16px;
-color: #1E3A8A;
-flex-shrink: 0;
+font-family: ‘Syne’, sans-serif; font-weight: 800; font-size: 13px; color: #1E3A8A; flex-shrink: 0;
 }
-.header-title { font-family: ‘Syne’, sans-serif; color: white; }
-.header-title h1 { font-size: 18px; font-weight: 700; line-height: 1.1; color: white; }
-.header-title p { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 2px; }
+.header-title h1 { font-family: ‘Syne’, sans-serif; font-size: 15px; font-weight: 700; color: white; }
+.header-title p  { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 1px; }
 #agence-badge {
-background: white;
-color: #1E3A8A;
-font-family: ‘Syne’, sans-serif;
-font-weight: 800;
-font-size: 13px;
-padding: 5px 14px;
-border-radius: 20px;
-letter-spacing: 0.08em;
+background: white; color: #1E3A8A; font-family: ‘Syne’, sans-serif;
+font-weight: 800; font-size: 12px; padding: 4px 11px; border-radius: 20px;
+letter-spacing: 0.08em; white-space: nowrap;
 }
 
-/* MAIN */
-main { padding: 20px 16px 40px; max-width: 700px; margin: 0 auto; }
+main { padding: 14px 12px 40px; max-width: 480px; margin: 0 auto; }
 
-/* STATUS BAR */
-#status-bar {
-display: flex; align-items: center; justify-content: space-between;
-margin-bottom: 18px; flex-wrap: wrap; gap: 8px;
-}
-#status-msg { font-size: 13px; color: var(–muted); }
+#status-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 8px; }
+#status-msg  { font-size: 12px; color: var(–muted); }
 #btn-refresh {
-background: var(–blue);
-color: white;
-border: none;
-padding: 8px 16px;
-border-radius: 20px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-font-weight: 600;
-cursor: pointer;
-display: flex; align-items: center; gap: 6px;
-transition: background 0.2s;
+background: var(–blue); color: white; border: none; padding: 7px 13px;
+border-radius: 20px; font-family: ‘DM Sans’, sans-serif; font-size: 12px;
+font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0;
 }
-#btn-refresh:hover { background: var(–blue-dark); }
-#btn-refresh:disabled { background: #93A4E0 !important; cursor: not-allowed; pointer-events: none; }
+#btn-refresh:disabled { background: #93A4E0 !important; cursor: not-allowed; }
 .spin { display: inline-block; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* STAT CARDS */
-.stats-grid {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 10px;
-margin-bottom: 18px;
+.section-title {
+font-family: ‘Syne’, sans-serif; font-size: 14px; font-weight: 700;
+color: var(–text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
 }
-@media(max-width: 480px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-.stat-card {
-background: var(–card);
-border-radius: 14px;
-padding: 14px 12px;
-text-align: center;
-border: 1px solid var(–border);
-transition: transform 0.15s;
-}
-.stat-card:hover { transform: translateY(-2px); }
-.stat-icon { font-size: 22px; margin-bottom: 4px; }
-.stat-value {
-font-family: ‘Syne’, sans-serif;
-font-size: 26px; font-weight: 800;
-line-height: 1;
-}
-.stat-label { font-size: 11px; color: var(–muted); margin-top: 4px; }
+.pill { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: var(–blue); color: white; }
+.pill-green { background: var(–vendeur); }
+
+.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+.stat-card { background: var(–card); border-radius: 12px; padding: 12px 10px; text-align: center; border: 1px solid var(–border); }
+.stat-icon  { font-size: 18px; margin-bottom: 3px; }
+.stat-value { font-family: ‘Syne’, sans-serif; font-size: 24px; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 10px; color: var(–muted); margin-top: 3px; }
 .card-total .stat-value { color: var(–blue); }
 .card-chaud .stat-value { color: var(–chaud); }
 .card-tiede .stat-value { color: var(–tiede); }
 .card-froid .stat-value { color: var(–froid); }
 
-/* VENDEURS STAT CARD (ligne séparée) */
-.stats-grid-vendeurs {
-display: grid;
-grid-template-columns: 1fr;
-gap: 10px;
-margin-bottom: 24px;
-}
 .card-vendeur {
-background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-border-radius: 14px;
-padding: 14px 18px;
-border: 1px solid #A7F3D0;
-display: flex;
-align-items: center;
-gap: 14px;
+background: linear-gradient(135deg,#ECFDF5,#D1FAE5); border-radius: 12px;
+padding: 12px 14px; border: 1px solid #A7F3D0;
+display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
 }
-.card-vendeur .stat-icon { font-size: 28px; margin-bottom: 0; }
-.card-vendeur .stat-value { color: var(–vendeur); font-size: 32px; }
-.card-vendeur .stat-label { font-size: 13px; color: #065F46; margin-top: 2px; }
+.card-vendeur .v-icon  { font-size: 26px; }
+.card-vendeur .v-value { font-family: ‘Syne’, sans-serif; font-size: 28px; font-weight: 800; color: var(–vendeur); line-height: 1; }
+.card-vendeur .v-label { font-size: 11px; color: #065F46; margin-top: 2px; }
 
-/* SECTION TITLE */
-.section-title {
-font-family: ‘Syne’, sans-serif;
-font-size: 15px;
-font-weight: 700;
-color: var(–text);
-margin-bottom: 12px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-.section-title .pill {
-font-size: 11px;
-font-weight: 600;
-padding: 2px 8px;
-border-radius: 20px;
-background: var(–blue);
-color: white;
-font-family: ‘DM Sans’, sans-serif;
-}
-.section-title .pill-green {
-background: var(–vendeur);
-}
-.section-divider {
-height: 1px;
-background: var(–border);
-margin: 28px 0 20px;
-}
-
-/* FILTERS */
-.filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.filters { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
 .filter-btn {
-border: 1.5px solid var(–border);
-background: var(–card);
-color: var(–muted);
-padding: 6px 14px;
-border-radius: 20px;
-font-size: 13px;
-font-family: ‘DM Sans’, sans-serif;
-cursor: pointer;
-transition: all 0.15s;
+border: 1.5px solid var(–border); background: var(–card); color: var(–muted);
+padding: 5px 11px; border-radius: 20px; font-size: 12px; font-family: ‘DM Sans’, sans-serif; cursor: pointer;
 }
-.filter-btn:hover { border-color: var(–blue); color: var(–blue); }
-.filter-btn.active { background: var(–blue); border-color: var(–blue); color: white; font-weight: 600; }
-.filter-btn.f-chaud.active { background: var(–chaud); border-color: var(–chaud); color: white; }
-.filter-btn.f-tiede.active { background: var(–tiede); border-color: var(–tiede); color: #7A4F00; font-weight: 700; }
-.filter-btn.f-froid.active { background: var(–froid); border-color: var(–froid); color: white; }
+.filter-btn.active           { background: var(–blue);  border-color: var(–blue);  color: white; font-weight: 600; }
+.filter-btn.f-chaud.active   { background: var(–chaud); border-color: var(–chaud); }
+.filter-btn.f-tiede.active   { background: var(–tiede); border-color: var(–tiede); color: #7A4F00; }
+.filter-btn.f-froid.active   { background: var(–froid); border-color: var(–froid); }
 
-/* TABLE */
 .table-wrap {
-background: var(–card);
-border-radius: 16px;
-border: 1px solid var(–border);
-overflow: hidden;
-margin-bottom: 8px;
+background: var(–card); border-radius: 14px; border: 1px solid var(–border);
+overflow: hidden; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 6px;
 }
-table { width: 100%; border-collapse: collapse; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 thead { background: #F8FAFF; }
+.table-wrap-vendeurs thead { background: #F0FDF4; }
 th {
-padding: 12px 14px;
-text-align: left;
-font-size: 11px;
-font-weight: 600;
-text-transform: uppercase;
-letter-spacing: 0.06em;
-color: var(–muted);
-border-bottom: 1px solid var(–border);
+padding: 9px 8px; text-align: left; font-size: 10px; font-weight: 700;
+text-transform: uppercase; letter-spacing: 0.05em; color: var(–muted);
+border-bottom: 1px solid var(–border); white-space: nowrap; overflow: hidden;
 }
+.table-wrap-vendeurs th { color: #065F46; }
 td {
-padding: 12px 14px;
-font-size: 13px;
-border-bottom: 1px solid #F1F5F9;
-vertical-align: middle;
+padding: 9px 8px; font-size: 12px; border-bottom: 1px solid #F1F5F9;
+vertical-align: middle; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #F8FAFF; }
-
-/* TABLE VENDEURS */
-.table-wrap-vendeurs thead { background: #F0FDF4; }
-.table-wrap-vendeurs th { color: #065F46; }
 .table-wrap-vendeurs tr:hover td { background: #F0FDF4; }
 
-.badge {
-display: inline-flex; align-items: center; gap: 4px;
-padding: 3px 9px; border-radius: 20px;
-font-size: 11px; font-weight: 600;
-}
+/* Acquéreurs — 4 colonnes, sans Budget */
+#tbl-acq .col-score   { width: 72px; }
+#tbl-acq .col-nom     { width: 30%; }
+#tbl-acq .col-ville   { width: 25%; }
+#tbl-acq .col-horizon { width: auto; }
+
+/* Vendeurs — 5 colonnes */
+#tbl-ven .col-vnom   { width: 28%; }
+#tbl-ven .col-vtype  { width: 26%; }
+#tbl-ven .col-vville { width: 18%; }
+#tbl-ven .col-vprix  { width: 18%; }
+#tbl-ven .col-vdate  { width: auto; }
+
+.badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
 .badge-chaud { background: var(–chaud); color: white; }
 .badge-tiede { background: var(–tiede); color: #7A4F00; }
 .badge-froid { background: var(–froid); color: white; }
-.badge-type {
-background: #ECFDF5;
-color: #065F46;
-border: 1px solid #A7F3D0;
-font-size: 11px;
-padding: 2px 8px;
-border-radius: 20px;
-font-weight: 500;
-}
-.no-data {
-text-align: center; padding: 40px 20px;
-color: var(–muted); font-size: 14px;
-}
-.no-data .icon { font-size: 36px; margin-bottom: 10px; }
-.prix-cell { font-weight: 600; color: var(–text); font-size: 12px; }
-.date-cell { font-size: 11px; color: var(–muted); white-space: nowrap; }
+.badge-type  { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; font-size: 10px; padding: 2px 6px; border-radius: 20px; white-space: nowrap; }
+.prix-cell { font-weight: 600; font-size: 11px; }
+.date-cell { font-size: 10px; color: var(–muted); }
 
-/* ERROR / DEBUG */
-#error-box {
-background: #FEF2F2; border: 1px solid #FECACA;
-border-radius: 12px; padding: 16px;
-font-size: 13px; color: #DC2626;
-margin-bottom: 16px; display: none;
-}
-#debug-box {
-background: #1A1F36; color: #A5B4FC;
-border-radius: 12px; padding: 14px;
-font-size: 11px; font-family: monospace;
-margin-bottom: 16px; display: none;
-word-break: break-all; white-space: pre-wrap;
-}
+.no-data { text-align: center; padding: 28px 12px; color: var(–muted); font-size: 12px; }
+.no-data .icon { font-size: 28px; margin-bottom: 6px; }
+.section-divider { height: 1px; background: var(–border); margin: 22px 0 16px; }
+
+#error-box { background:#FEF2F2; border:1px solid #FECACA; border-radius:10px; padding:12px; font-size:12px; color:#DC2626; margin-bottom:12px; display:none; }
+#debug-box { background:#1A1F36; color:#A5B4FC; border-radius:10px; padding:12px; font-size:10px; font-family:monospace; margin-bottom:12px; display:none; word-break:break-all; white-space:pre-wrap; }
 </style>
 
 </head>
@@ -278,41 +156,18 @@ word-break: break-all; white-space: pre-wrap;
 <main>
   <div id="status-bar">
     <span id="status-msg">Chargement...</span>
-    <button id="btn-refresh" onclick="loadAll()">
-      <span id="refresh-icon">↻</span> Actualiser
-    </button>
+    <button id="btn-refresh" onclick="loadAll()"><span id="refresh-icon">↻</span> Actualiser</button>
   </div>
-
   <div id="error-box"></div>
   <div id="debug-box"></div>
 
-  <!-- ACQUÉREURS STATS -->
-
-  <div class="section-title">
-    🏠 Acquéreurs <span class="pill" id="pill-acquereurs">0</span>
-  </div>
+  <div class="section-title">🏠 Acquéreurs <span class="pill" id="pill-acquereurs">0</span></div>
 
   <div class="stats-grid">
-    <div class="stat-card card-total">
-      <div class="stat-icon">📋</div>
-      <div class="stat-value" id="count-total">0</div>
-      <div class="stat-label">Total leads</div>
-    </div>
-    <div class="stat-card card-chaud">
-      <div class="stat-icon">🔥</div>
-      <div class="stat-value" id="count-chaud">0</div>
-      <div class="stat-label">Chauds</div>
-    </div>
-    <div class="stat-card card-tiede">
-      <div class="stat-icon">⚡</div>
-      <div class="stat-value" id="count-tiede">0</div>
-      <div class="stat-label">Tièdes</div>
-    </div>
-    <div class="stat-card card-froid">
-      <div class="stat-icon">❄️</div>
-      <div class="stat-value" id="count-froid">0</div>
-      <div class="stat-label">Froids</div>
-    </div>
+    <div class="stat-card card-total"><div class="stat-icon">📋</div><div class="stat-value" id="count-total">0</div><div class="stat-label">Total leads</div></div>
+    <div class="stat-card card-chaud"><div class="stat-icon">🔥</div><div class="stat-value" id="count-chaud">0</div><div class="stat-label">Chauds</div></div>
+    <div class="stat-card card-tiede"><div class="stat-icon">⚡</div><div class="stat-value" id="count-tiede">0</div><div class="stat-label">Tièdes</div></div>
+    <div class="stat-card card-froid"><div class="stat-icon">❄️</div><div class="stat-value" id="count-froid">0</div><div class="stat-label">Froids</div></div>
   </div>
 
   <div class="filters">
@@ -323,379 +178,143 @@ word-break: break-all; white-space: pre-wrap;
   </div>
 
   <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Score</th>
-          <th>Nom</th>
-          <th>Ville</th>
-          <th>Horizon</th>
-          <th>Budget</th>
-        </tr>
-      </thead>
-      <tbody id="table-body">
-        <tr><td colspan="5" class="no-data"><div class="icon">⏳</div>Chargement...</td></tr>
-      </tbody>
+    <table id="tbl-acq">
+      <thead><tr>
+        <th class="col-score">Score</th>
+        <th class="col-nom">Nom</th>
+        <th class="col-ville">Ville</th>
+        <th class="col-horizon">Horizon</th>
+      </tr></thead>
+      <tbody id="table-body"><tr><td colspan="4" class="no-data"><div class="icon">⏳</div>Chargement...</td></tr></tbody>
     </table>
   </div>
-
-  <!-- SÉPARATEUR -->
 
   <div class="section-divider"></div>
 
-  <!-- VENDEURS SECTION -->
+  <div class="section-title">🏷️ Vendeurs <span class="pill pill-green" id="pill-vendeurs">0</span></div>
 
-  <div class="section-title">
-    🏷️ Vendeurs <span class="pill pill-green" id="pill-vendeurs">0</span>
-  </div>
-
-  <div class="stats-grid-vendeurs">
-    <div class="card-vendeur">
-      <div class="stat-icon">🏡</div>
-      <div>
-        <div class="stat-value" id="count-vendeurs">0</div>
-        <div class="stat-label">Biens à vendre enregistrés</div>
-      </div>
-    </div>
+  <div class="card-vendeur">
+    <div class="v-icon">🏡</div>
+    <div><div class="v-value" id="count-vendeurs">0</div><div class="v-label">Biens à vendre enregistrés</div></div>
   </div>
 
   <div class="table-wrap table-wrap-vendeurs">
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Type de bien</th>
-          <th>Ville</th>
-          <th>Prix souhaité</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody id="table-body-vendeurs">
-        <tr><td colspan="5" class="no-data"><div class="icon">⏳</div>Chargement...</td></tr>
-      </tbody>
+    <table id="tbl-ven">
+      <thead><tr>
+        <th class="col-vnom">Nom</th>
+        <th class="col-vtype">Type</th>
+        <th class="col-vville">Ville</th>
+        <th class="col-vprix">Prix</th>
+        <th class="col-vdate">Date</th>
+      </tr></thead>
+      <tbody id="table-body-vendeurs"><tr><td colspan="5" class="no-data"><div class="icon">⏳</div>Chargement...</td></tr></tbody>
     </table>
   </div>
-
 </main>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const SHEET_ID_ACQ='1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc', SHEET_NAME_ACQ='Réponses au formulaire 2';
+const SHEET_ID_VEN='1m5WbIcjuj3LgsHnXO3rmxO2X5bdkCJ0-4mM6K3bs0XI', SHEET_NAME_VEN='Vendeurs';
+const COL_ACQ={nom:1,ville:5,budget:6,horizon:7,refDossier:9,agence:10};
+const COL_VEN={horodateur:0,nom:1,type:4,adresse:5,prix:6,refDossier:10};
 
-// Sheet ACQUÉREURS
-const SHEET_ID_ACQ  = '1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc';
-const SHEET_NAME_ACQ = 'Réponses au formulaire 2';
-
-// Sheet VENDEURS
-const SHEET_ID_VEN  = '1m5WbIcjuj3LgsHnXO3rmxO2X5bdkCJ0-4mM6K3bs0XI';
-const SHEET_NAME_VEN = 'Vendeurs';
-
-// Colonnes ACQUÉREURS (0-based)
-const COL_ACQ = {
-  horodateur : 0,  // A
-  nom        : 1,  // B
-  email      : 2,  // C
-  telephone  : 3,  // D
-  type       : 4,  // E
-  ville      : 5,  // F
-  budget     : 6,  // G
-  horizon    : 7,  // H
-  refDossier : 9,  // J
-  agence     : 10  // K
-};
-
-// Colonnes VENDEURS (0-based)
-// A=0 Horodateur, B=1 Prénom Nom, C=2 Email, D=3 Téléphone,
-// E=4 Type de bien, F=5 Adresse, G=6 Prix souhaité,
-// H=7 Délai de vente, I=8 Déjà en agence, J=9 Agence,
-// K=10 RÉF DOSSIER
-const COL_VEN = {
-  horodateur : 0,  // A
-  nom        : 1,  // B
-  type       : 4,  // E
-  adresse    : 5,  // F
-  prix       : 6,  // G
-  refDossier : 10  // K
-};
-
-// Score acquéreurs basé sur horizon
-function scoreFromHorizon(h) {
-  if (!h) return 'Froid';
-  const s = h.toLowerCase().trim();
-  if (s.includes('immédiatement') || s.includes('immediat') || s.includes('le plus vite')) return 'Chaud';
-  if (s.includes('1-3') || s.includes('1 à 3') || s.includes('1-3 mois')) return 'Tiède';
-  return 'Froid';
+function scoreFromHorizon(h){
+  if(!h)return'Froid'; const s=h.toLowerCase();
+  if(s.includes('immédiatement')||s.includes('immediat')||s.includes('le plus vite'))return'Chaud';
+  if(s.includes('1-3')||s.includes('1 à 3'))return'Tiède';
+  return'Froid';
+}
+function villeFromAdresse(a){
+  if(!a)return'—';
+  const m=a.match(/\b\d{4,5}\s+([A-ZÀ-Ÿa-zà-ÿ][a-zà-ÿA-ZÀ-Ÿ\s\-]+)$/);
+  if(m)return m[1].trim().split(' ')[0];
+  const p=a.trim().split(/\s+/); return p[p.length-1]||a;
+}
+function formatDate(raw){
+  if(!raw)return'—';
+  const dm=String(raw).match(/Date\((\d+),(\d+),(\d+)/);
+  if(dm){const d=new Date(+dm[1],+dm[2],+dm[3]);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});}
+  try{const d=new Date(raw);if(!isNaN(d))return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});}catch(e){}
+  return String(raw).substring(0,10);
 }
 
-// Extraire la ville depuis une adresse (dernier mot du code postal ou ville)
-function villeFromAdresse(adresse) {
-  if (!adresse) return '—';
-  // Cherche un pattern "XXXXX NomVille" (code postal suivi de ville)
-  const match = adresse.match(/\b\d{4,5}\s+([A-ZÀ-Ÿa-zà-ÿ\s\-]+)$/);
-  if (match) return match[1].trim();
-  // Sinon retourne les derniers mots
-  const parts = adresse.trim().split(/\s+/);
-  return parts.slice(-2).join(' ') || adresse;
-}
+let allAcq=[],allVen=[],filter='all',agenceCode='',loaded=0;
 
-// Formater la date
-function formatDate(raw) {
-  if (!raw) return '—';
-  // raw peut être "Date(2026,3,5,21,31,44)" ou une date ISO
-  const dm = String(raw).match(/Date\((\d+),(\d+),(\d+)/);
-  if (dm) {
-    const d = new Date(parseInt(dm[1]), parseInt(dm[2]), parseInt(dm[3]));
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
-  }
-  try {
-    const d = new Date(raw);
-    if (!isNaN(d)) return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
-  } catch(e) {}
-  return String(raw).substring(0, 10);
-}
-
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let allAcquereurs = [];
-let allVendeurs   = [];
-let currentFilter = 'all';
-let agenceCode    = '';
-let loadedCount   = 0; // track async loads
-
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(window.location.search);
-  agenceCode = (params.get('agence') || '').trim().toUpperCase();
-  document.getElementById('agence-badge').textContent = agenceCode || 'TOUTES';
+document.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(window.location.search);
+  agenceCode=(p.get('agence')||'').trim().toUpperCase();
+  document.getElementById('agence-badge').textContent=agenceCode||'TOUTES';
   loadAll();
 });
 
-// ─── LOAD ALL ─────────────────────────────────────────────────────────────────
-function loadAll() {
-  setStatus('Chargement…', true);
-  hideError();
-  loadedCount = 0;
-  loadGviz(SHEET_ID_ACQ, SHEET_NAME_ACQ, 'acq');
-  loadGviz(SHEET_ID_VEN, SHEET_NAME_VEN, 'ven');
+function loadAll(){setStatus('Chargement…',true);hideError();loaded=0;loadGviz(SHEET_ID_ACQ,SHEET_NAME_ACQ,'acq');loadGviz(SHEET_ID_VEN,SHEET_NAME_VEN,'ven');}
+
+function done(){loaded++;if(loaded>=2){renderStats();renderTable();renderVendeurs();setStatus('Mis à jour · '+new Date().toLocaleTimeString('fr-FR'),false);}}
+
+function loadGviz(id,name,tag){
+  const cb='lia_'+tag+'_'+Date.now();
+  const src='https://docs.google.com/spreadsheets/d/'+id+'/gviz/tq?tqx=responseHandler:'+cb+'&sheet='+encodeURIComponent(name);
+  window[cb]=function(data){clearTimeout(t);delete window[cb];if(el.parentNode)el.parentNode.removeChild(el);if(tag==='acq')parseAcq(data);else parseVen(data);done();};
+  const el=document.createElement('script'); el.src=src;
+  el.onerror=()=>{showError('Erreur ('+tag+')');setStatus('Erreur',false);};
+  const t=setTimeout(()=>{delete window[cb];if(el.parentNode)el.parentNode.removeChild(el);showError('Délai ('+tag+')');setStatus('Erreur',false);},12000);
+  document.head.appendChild(el);
 }
 
-function onLoaded() {
-  loadedCount++;
-  if (loadedCount >= 2) {
-    renderStats();
-    renderTable();
-    renderVendeurs();
-    setStatus('Mis à jour · ' + new Date().toLocaleTimeString('fr-FR'), false);
-  }
+function parseAcq(data){
+  try{allAcq=[];(data.table?data.table.rows:[]).forEach(row=>{
+    if(!row||!row.c)return;
+    const g=i=>(!row.c[i]||row.c[i].v==null)?'':String(row.c[i].v).trim();
+    const ref=g(COL_ACQ.refDossier).toUpperCase(), agv=g(COL_ACQ.agence).toUpperCase();
+    if(agenceCode&&ref!==agenceCode&&agv!==agenceCode)return;
+    const h=g(COL_ACQ.horizon);
+    allAcq.push({nom:g(COL_ACQ.nom)||'Anonyme',ville:g(COL_ACQ.ville)||'—',horizon:h||'—',score:scoreFromHorizon(h)});
+  });}catch(e){showError('Err acq:'+e.message);}
 }
 
-// ─── JSONP LOADER ─────────────────────────────────────────────────────────────
-function loadGviz(sheetId, sheetName, tag) {
-  const callbackName = 'lia_cb_' + tag + '_' + Date.now();
-
-  const src = 'https://docs.google.com/spreadsheets/d/' + sheetId +
-              '/gviz/tq?tqx=responseHandler:' + callbackName +
-              '&sheet=' + encodeURIComponent(sheetName);
-
-  window[callbackName] = function(data) {
-    clearTimeout(timer);
-    delete window[callbackName];
-    if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
-    if (tag === 'acq') parseAcquereurs(data);
-    else parseVendeurs(data);
-    onLoaded();
-  };
-
-  const scriptEl = document.createElement('script');
-  scriptEl.src = src;
-  scriptEl.onerror = function() {
-    clearTimeout(timer);
-    delete window[callbackName];
-    showError('Impossible de charger les données (' + tag + '). Vérifiez que le classeur est public.');
-    setStatus('Erreur', false);
-  };
-
-  const timer = setTimeout(function() {
-    delete window[callbackName];
-    if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
-    showError('Délai dépassé (' + tag + '). Réessayez.');
-    setStatus('Erreur', false);
-  }, 12000);
-
-  document.head.appendChild(scriptEl);
+function parseVen(data){
+  try{allVen=[];(data.table?data.table.rows:[]).forEach(row=>{
+    if(!row||!row.c)return;
+    const g=i=>(!row.c[i]||row.c[i].v==null)?'':String(row.c[i].v).trim();
+    const gr=i=>(!row.c[i]||row.c[i].v==null)?'':row.c[i].v;
+    const ref=g(COL_VEN.refDossier).toUpperCase();
+    if(agenceCode&&ref!==agenceCode)return;
+    allVen.push({nom:g(COL_VEN.nom)||'Anonyme',type:g(COL_VEN.type)||'—',ville:villeFromAdresse(g(COL_VEN.adresse)),prix:g(COL_VEN.prix)||'—',date:gr(COL_VEN.horodateur)});
+  });}catch(e){showError('Err ven:'+e.message);}
 }
 
-// ─── PARSE ACQUÉREURS ─────────────────────────────────────────────────────────
-function parseAcquereurs(data) {
-  try {
-    const rows = data.table ? data.table.rows : [];
-    allAcquereurs = [];
-
-    rows.forEach(row => {
-      if (!row || !row.c) return;
-      const c = row.c;
-      const get = (idx) => {
-        if (!c[idx] || c[idx].v === null || c[idx].v === undefined) return '';
-        return String(c[idx].v).trim();
-      };
-
-      const refDossier = get(COL_ACQ.refDossier).toUpperCase();
-      const agenceVal  = get(COL_ACQ.agence).toUpperCase();
-
-      if (agenceCode) {
-        if (refDossier !== agenceCode && agenceVal !== agenceCode) return;
-      }
-
-      const horizon = get(COL_ACQ.horizon);
-      allAcquereurs.push({
-        nom     : get(COL_ACQ.nom)    || 'Anonyme',
-        ville   : get(COL_ACQ.ville)  || '—',
-        budget  : get(COL_ACQ.budget) || '—',
-        horizon : horizon             || '—',
-        score   : scoreFromHorizon(horizon),
-      });
-    });
-  } catch(e) {
-    showError('Erreur parsing acquéreurs : ' + e.message);
-  }
+function renderStats(){
+  const c=allAcq.filter(r=>r.score==='Chaud').length, t=allAcq.filter(r=>r.score==='Tiède').length, f=allAcq.filter(r=>r.score==='Froid').length, tot=allAcq.length;
+  document.getElementById('count-total').textContent=tot; document.getElementById('count-chaud').textContent=c;
+  document.getElementById('count-tiede').textContent=t;   document.getElementById('count-froid').textContent=f;
+  document.getElementById('pill-acquereurs').textContent=tot;
 }
 
-// ─── PARSE VENDEURS ───────────────────────────────────────────────────────────
-function parseVendeurs(data) {
-  try {
-    const rows = data.table ? data.table.rows : [];
-    allVendeurs = [];
-
-    rows.forEach(row => {
-      if (!row || !row.c) return;
-      const c = row.c;
-      const get = (idx) => {
-        if (!c[idx] || c[idx].v === null || c[idx].v === undefined) return '';
-        return String(c[idx].v).trim();
-      };
-      const getRaw = (idx) => {
-        if (!c[idx] || c[idx].v === null || c[idx].v === undefined) return '';
-        return c[idx].v;
-      };
-
-      const refDossier = get(COL_VEN.refDossier).toUpperCase();
-
-      if (agenceCode && refDossier !== agenceCode) return;
-
-      const adresse = get(COL_VEN.adresse);
-
-      allVendeurs.push({
-        nom        : get(COL_VEN.nom)  || 'Anonyme',
-        type       : get(COL_VEN.type) || '—',
-        adresse    : adresse,
-        ville      : villeFromAdresse(adresse),
-        prix       : get(COL_VEN.prix) || '—',
-        horodateur : getRaw(COL_VEN.horodateur),
-      });
-    });
-  } catch(e) {
-    showError('Erreur parsing vendeurs : ' + e.message);
-  }
-}
-
-// ─── RENDER ACQUÉREURS ────────────────────────────────────────────────────────
-function renderStats() {
-  const chauds = allAcquereurs.filter(r => r.score === 'Chaud').length;
-  const tièdes = allAcquereurs.filter(r => r.score === 'Tiède').length;
-  const froids = allAcquereurs.filter(r => r.score === 'Froid').length;
-  const total  = allAcquereurs.length;
-
-  document.getElementById('count-total').textContent = total;
-  document.getElementById('count-chaud').textContent = chauds;
-  document.getElementById('count-tiede').textContent = tièdes;
-  document.getElementById('count-froid').textContent = froids;
-  document.getElementById('pill-acquereurs').textContent = total;
-}
-
-function renderTable() {
-  const tbody = document.getElementById('table-body');
-  const filtered = currentFilter === 'all'
-    ? allAcquereurs
-    : allAcquereurs.filter(r => r.score === currentFilter);
-
-  if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="no-data"><div class="icon">📭</div>Aucun acquéreur' +
-      (agenceCode ? ' pour ' + agenceCode : '') + '</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = filtered.map(r => {
-    const cls  = r.score === 'Chaud' ? 'badge-chaud' : r.score === 'Tiède' ? 'badge-tiede' : 'badge-froid';
-    const icon = r.score === 'Chaud' ? '🔥' : r.score === 'Tiède' ? '⚡' : '❄️';
-    return '<tr>' +
-      '<td><span class="badge ' + cls + '">' + icon + ' ' + r.score + '</span></td>' +
-      '<td><strong>' + esc(r.nom) + '</strong></td>' +
-      '<td>' + esc(r.ville) + '</td>' +
-      '<td>' + esc(r.horizon) + '</td>' +
-      '<td>' + esc(r.budget) + '</td>' +
-    '</tr>';
+function renderTable(){
+  const tbody=document.getElementById('table-body');
+  const rows=filter==='all'?allAcq:allAcq.filter(r=>r.score===filter);
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="4" class="no-data"><div class="icon">📭</div>Aucun acquéreur'+(agenceCode?' pour '+agenceCode:'')+'</td></tr>';return;}
+  tbody.innerHTML=rows.map(r=>{
+    const cls=r.score==='Chaud'?'badge-chaud':r.score==='Tiède'?'badge-tiede':'badge-froid';
+    const ic=r.score==='Chaud'?'🔥':r.score==='Tiède'?'⚡':'❄️';
+    return'<tr><td><span class="badge '+cls+'">'+ic+' '+r.score+'</span></td><td><strong>'+esc(r.nom)+'</strong></td><td>'+esc(r.ville)+'</td><td>'+esc(r.horizon)+'</td></tr>';
   }).join('');
 }
 
-// ─── RENDER VENDEURS ──────────────────────────────────────────────────────────
-function renderVendeurs() {
-  const total = allVendeurs.length;
-  document.getElementById('count-vendeurs').textContent = total;
-  document.getElementById('pill-vendeurs').textContent = total;
-
-  const tbody = document.getElementById('table-body-vendeurs');
-
-  if (total === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="no-data"><div class="icon">🏡</div>Aucun vendeur' +
-      (agenceCode ? ' pour ' + agenceCode : '') + '</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = allVendeurs.map(r => {
-    return '<tr>' +
-      '<td><strong>' + esc(r.nom) + '</strong></td>' +
-      '<td><span class="badge-type">' + esc(r.type) + '</span></td>' +
-      '<td>' + esc(r.ville) + '</td>' +
-      '<td class="prix-cell">' + esc(r.prix) + '</td>' +
-      '<td class="date-cell">' + formatDate(r.horodateur) + '</td>' +
-    '</tr>';
-  }).join('');
+function renderVendeurs(){
+  const tot=allVen.length;
+  document.getElementById('count-vendeurs').textContent=tot;
+  document.getElementById('pill-vendeurs').textContent=tot;
+  const tbody=document.getElementById('table-body-vendeurs');
+  if(!tot){tbody.innerHTML='<tr><td colspan="5" class="no-data"><div class="icon">🏡</div>Aucun vendeur'+(agenceCode?' pour '+agenceCode:'')+'</td></tr>';return;}
+  tbody.innerHTML=allVen.map(r=>'<tr><td><strong>'+esc(r.nom)+'</strong></td><td><span class="badge-type">'+esc(r.type)+'</span></td><td>'+esc(r.ville)+'</td><td class="prix-cell">'+esc(r.prix)+'</td><td class="date-cell">'+formatDate(r.date)+'</td></tr>').join('');
 }
 
-// ─── HELPERS ──────────────────────────────────────────────────────────────────
-function setFilter(val, btn) {
-  currentFilter = val;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTable();
-}
-
-function setStatus(msg, loading) {
-  document.getElementById('status-msg').textContent = msg;
-  const icon = document.getElementById('refresh-icon');
-  const btn  = document.getElementById('btn-refresh');
-  icon.className = loading ? 'spin' : '';
-  icon.textContent = '↻';
-  btn.disabled = loading;
-  btn.style.background = loading ? '#93A4E0' : '#3B5BDB';
-}
-
-function showError(msg) {
-  const box = document.getElementById('error-box');
-  box.style.display = 'block';
-  box.textContent = msg;
-}
-function hideError() {
-  document.getElementById('error-box').style.display = 'none';
-}
-function showDebug(msg) {
-  const params = new URLSearchParams(window.location.search);
-  if (!params.get('debug')) return;
-  const box = document.getElementById('debug-box');
-  box.style.display = 'block';
-  box.textContent = msg;
-}
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function setFilter(val,btn){filter=val;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
+function setStatus(msg,loading){document.getElementById('status-msg').textContent=msg;const ic=document.getElementById('refresh-icon'),btn=document.getElementById('btn-refresh');ic.className=loading?'spin':'';ic.textContent='↻';btn.disabled=loading;btn.style.background=loading?'#93A4E0':'#1E3A8A';}
+function showError(msg){const b=document.getElementById('error-box');b.style.display='block';b.textContent=msg;}
+function hideError(){document.getElementById('error-box').style.display='none';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 </script>
 
 </body>
