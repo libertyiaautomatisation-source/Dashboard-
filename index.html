@@ -5,158 +5,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Liberty IA — Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+:root {
+  --bg:       #f7f8fc;
+  --surface:  #ffffff;
+  --surface2: #f0f2f8;
+  --border:   #e4e7f0;
+  --accent:   #2452d4;
+  --green:    #0a8f68;
+  --orange:   #c96a00;
+  --red:      #c62828;
+  --text:     #111827;
+  --sub:      #6b7280;
+  --mono:     'IBM Plex Mono', monospace;
+  --sans:     'Figtree', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
-  background: #f4f6fb !important;
-  color: #1a1d27 !important;
-  font-family: 'Syne', sans-serif;
-  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
   min-height: 100vh;
   -webkit-text-size-adjust: 100%;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg:      #f4f6fb;
-  --surface: #ffffff;
-  --surface2:#f0f2f8;
-  --border:  #e2e6f0;
-  --accent:  #3B5BDB;
-  --blue:    #3B5BDB;
-  --green:   #0ca678;
-  --orange:  #e8760a;
-  --red:     #e03131;
-  --text:    #1a1d27;
-  --muted:   #8892aa;
-  --mono:    'DM Mono', monospace;
-}
 
-/* HEADER */
+/* ── HEADER ── */
 header {
-padding: 16px 18px;
-display: flex; align-items: center; justify-content: space-between;
+background: var(–surface);
 border-bottom: 1px solid var(–border);
-background: #ffffff;
+padding: 14px 20px;
+display: flex; align-items: center; justify-content: space-between;
 position: sticky; top: 0; z-index: 100;
-box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 .logo { display: flex; align-items: center; gap: 10px; }
-.logo-mark {
-width: 32px; height: 32px; background: var(–accent); border-radius: 7px;
-display: flex; align-items: center; justify-content: center;
-font-weight: 800; font-size: 15px; color: #fff; flex-shrink: 0;
+.logo-icon {
+width: 30px; height: 30px; background: var(–accent);
+border-radius: 6px; display: flex; align-items: center; justify-content: center;
+font-weight: 800; font-size: 13px; color: #fff; flex-shrink: 0;
+font-family: var(–mono);
 }
-.logo-name { font-size: 16px; font-weight: 700; color: var(–text); }
-.logo-name em { color: var(–accent); font-style: normal; }
-.agency-pill {
+.logo-text { font-size: 15px; font-weight: 700; letter-spacing: -.3px; }
+.logo-text em { color: var(–accent); font-style: normal; }
+
+.agency-tag {
 display: flex; align-items: center; gap: 6px;
-padding: 5px 12px; background: var(–surface2);
-border: 1px solid var(–border); border-radius: 99px;
-font-family: var(–mono); font-size: 11px; color: var(–muted);
-white-space: nowrap; max-width: 55%; overflow: hidden; text-overflow: ellipsis;
+padding: 4px 11px; border: 1px solid var(–border);
+border-radius: 99px; background: var(–surface2);
+font-family: var(–mono); font-size: 10px; color: var(–sub);
+max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.live-dot {
+.pulse {
 width: 6px; height: 6px; border-radius: 50%;
 background: var(–green); flex-shrink: 0;
-animation: blink 2s infinite;
+animation: pulse 2.2s ease-in-out infinite;
 }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-/* MAIN */
-main { max-width: 680px; margin: 0 auto; padding: 24px 14px 60px; }
+/* ── MAIN ── */
+main { max-width: 660px; margin: 0 auto; padding: 28px 16px 64px; }
 
-/* SECTION LABEL */
-.slabel {
-font-family: var(–mono); font-size: 10px; letter-spacing: 2px;
-text-transform: uppercase; color: var(–muted);
-margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+/* ── SECTION HEADER ── */
+.section-head {
+display: flex; align-items: center; gap: 10px;
+margin-bottom: 16px;
 }
-.slabel::after { content: ‘’; flex: 1; height: 1px; background: var(–border); }
+.section-head h2 {
+font-size: 10px; font-weight: 600; letter-spacing: 2px;
+text-transform: uppercase; color: var(–sub); font-family: var(–mono);
+white-space: nowrap;
+}
+.section-head::after { content:’’; flex:1; height:1px; background: var(–border); }
 
-/* STATS */
-.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
+/* ── STAT GRID ── */
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 20px; }
 .stat {
 background: var(–surface); border: 1px solid var(–border);
-border-radius: 12px; padding: 14px 12px; position: relative; overflow: hidden;
+border-radius: 10px; padding: 14px 12px; overflow: hidden; position: relative;
 }
-.stat::after { content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.stat.hot::after  { background: var(–red); }
-.stat.warm::after { background: var(–orange); }
-.stat.cold::after { background: var(–blue); }
-.stat-lbl {
-font-family: var(–mono); font-size: 9px; letter-spacing: 1.5px;
-text-transform: uppercase; margin-bottom: 8px;
+.stat::before {
+content:’’; position:absolute; top:0; left:0; right:0; height:2px;
 }
-.stat.hot  .stat-lbl { color: var(–red); }
-.stat.warm .stat-lbl { color: var(–orange); }
-.stat.cold .stat-lbl { color: var(–blue); }
-.stat-num { font-size: 34px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+.stat.hot::before  { background: var(–red); }
+.stat.warm::before { background: var(–orange); }
+.stat.cold::before { background: var(–accent); }
+.stat-label {
+font-size: 9px; font-family: var(–mono); letter-spacing: 1.5px;
+text-transform: uppercase; margin-bottom: 9px;
+}
+.stat.hot  .stat-label { color: var(–red); }
+.stat.warm .stat-label { color: var(–orange); }
+.stat.cold .stat-label { color: var(–accent); }
+.stat-num { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -2px; }
 .stat.hot  .stat-num { color: var(–red); }
 .stat.warm .stat-num { color: var(–orange); }
-.stat.cold .stat-num { color: var(–blue); }
-.stat-sub { font-size: 10px; color: var(–muted); margin-top: 4px; }
+.stat.cold .stat-num { color: var(–accent); }
+.stat-hint { font-size: 10px; color: var(–sub); margin-top: 5px; }
 
-/* CARD */
+/* ── CARD ── */
 .card {
 background: var(–surface); border: 1px solid var(–border);
-border-radius: 12px; overflow: hidden; margin-bottom: 28px;
-box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+border-radius: 12px; overflow: hidden; margin-bottom: 32px;
 }
-.card-head {
-padding: 13px 16px; border-bottom: 1px solid var(–border);
+.card-header {
+padding: 12px 16px; border-bottom: 1px solid var(–border);
 display: flex; align-items: center; justify-content: space-between;
 background: var(–surface2);
 }
-.card-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 7px; }
-.cnt {
-font-family: var(–mono); font-size: 10px; padding: 2px 8px;
-border-radius: 99px; background: var(–surface);
-border: 1px solid var(–border); color: var(–muted);
+.card-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.count-pill {
+font-family: var(–mono); font-size: 10px;
+padding: 2px 9px; border-radius: 99px;
+background: var(–surface); border: 1px solid var(–border); color: var(–sub);
 }
 
-/* ROW LIST */
+/* ── LIST ROW ── */
 .rlist { list-style: none; }
-.ritem {
+.rrow {
+display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
 padding: 13px 16px; border-bottom: 1px solid var(–border);
-display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+transition: background .12s;
 }
-.ritem:last-child { border-bottom: none; }
+.rrow:last-child { border-bottom: none; }
+.rrow:hover { background: var(–surface2); }
 .rleft { flex: 1; min-width: 0; }
 .rname {
-font-size: 14px; font-weight: 600; color: var(–text);
+font-size: 14px; font-weight: 600;
 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+margin-bottom: 5px;
 }
 .rmeta {
-font-size: 11px; color: var(–muted); margin-top: 4px;
-display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
 }
-.tag {
-font-family: var(–mono); font-size: 10px; padding: 2px 7px;
-border-radius: 4px; background: var(–surface2);
-border: 1px solid var(–border); color: var(–muted);
+.chip {
+font-family: var(–mono); font-size: 9px; padding: 2px 6px;
+border-radius: 4px; background: var(–surface2); border: 1px solid var(–border);
+color: var(–sub); white-space: nowrap;
 }
+.ville { font-size: 11px; color: var(–sub); }
+.delai-txt { font-size: 10px; color: var(–sub); font-family: var(–mono); }
+
 .rright { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+
+/* badges */
 .badge {
-font-family: var(–mono); font-size: 10px; padding: 3px 9px;
-border-radius: 99px; font-weight: 500;
+font-family: var(–mono); font-size: 9px; padding: 3px 9px;
+border-radius: 99px; font-weight: 500; white-space: nowrap;
 display: flex; align-items: center; gap: 4px;
 }
-.badge::before { content: ‘’; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-.badge-hot  { background: rgba(224,49,49,.08);  color: var(–red);    border: 1px solid rgba(224,49,49,.2); }
-.badge-warm { background: rgba(232,118,10,.08); color: var(–orange); border: 1px solid rgba(232,118,10,.2); }
-.badge-cold { background: rgba(59,91,219,.08);  color: var(–blue);   border: 1px solid rgba(59,91,219,.2); }
+.badge::before { content:’’; width:5px; height:5px; border-radius:50%; background:currentColor; }
+.b-hot  { background:rgba(198,40,40,.07);  color:var(–red);    border:1px solid rgba(198,40,40,.18); }
+.b-warm { background:rgba(201,106,0,.07);  color:var(–orange); border:1px solid rgba(201,106,0,.18); }
+.b-cold { background:rgba(36,82,212,.07);  color:var(–accent); border:1px solid rgba(36,82,212,.18); }
+
 .price { font-family: var(–mono); font-size: 12px; color: var(–green); font-weight: 600; }
-.ddate { font-family: var(–mono); font-size: 10px; color: var(–muted); }
+.ddate { font-family: var(–mono); font-size: 10px; color: var(–sub); }
 
-.empty { padding: 30px 16px; text-align: center; color: var(–muted); font-size: 12px; font-family: var(–mono); }
+.empty { padding: 32px 16px; text-align: center; color: var(–sub); font-size: 11px; font-family: var(–mono); }
 
-/* FOOTER */
+/* ── FOOTER ── */
 footer {
-text-align: center; padding: 18px 16px;
-font-family: var(–mono); font-size: 10px; color: var(–muted);
+text-align: center; padding: 20px 16px;
+font-family: var(–mono); font-size: 10px; color: var(–sub);
 border-top: 1px solid var(–border);
 }
-footer span { color: var(–accent); }
+footer strong { color: var(–accent); }
 </style>
 
 </head>
@@ -164,58 +178,58 @@ footer span { color: var(–accent); }
 
 <header>
   <div class="logo">
-    <div class="logo-mark">L</div>
-    <div class="logo-name">Liberty <em>IA</em></div>
+    <div class="logo-icon">L</div>
+    <div class="logo-text">Liberty <em>IA</em></div>
   </div>
-  <div class="agency-pill">
-    <div class="live-dot"></div>
+  <div class="agency-tag">
+    <div class="pulse"></div>
     <span id="agencyLabel">…</span>
   </div>
 </header>
 
 <main>
 
-  <div class="slabel">Acquéreurs</div>
+  <div class="section-head"><h2>Acquéreurs</h2></div>
 
-  <div class="stats-row">
+  <div class="stats">
     <div class="stat hot">
-      <div class="stat-lbl">🔴 Chauds</div>
+      <div class="stat-label">Chauds</div>
       <div class="stat-num" id="cHot">—</div>
-      <div class="stat-sub">Immédiat</div>
+      <div class="stat-hint">Immédiat</div>
     </div>
     <div class="stat warm">
-      <div class="stat-lbl">🟠 Tièdes</div>
+      <div class="stat-label">Tièdes</div>
       <div class="stat-num" id="cWarm">—</div>
-      <div class="stat-sub">1–3 mois</div>
+      <div class="stat-hint">1–3 mois</div>
     </div>
     <div class="stat cold">
-      <div class="stat-lbl">🔵 Froids</div>
+      <div class="stat-label">Froids</div>
       <div class="stat-num" id="cCold">—</div>
-      <div class="stat-sub">3–6 mois</div>
+      <div class="stat-hint">3–6 mois</div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head">
+    <div class="card-header">
       <div class="card-title">👤 Leads acquéreurs</div>
-      <span class="cnt" id="totalAcq">0</span>
+      <span class="count-pill" id="totalAcq">0</span>
     </div>
     <ul class="rlist" id="listAcq"><li class="empty">Chargement…</li></ul>
   </div>
 
-  <div class="slabel">Vendeurs</div>
+  <div class="section-head"><h2>Vendeurs</h2></div>
 
   <div class="card">
-    <div class="card-head">
+    <div class="card-header">
       <div class="card-title">🏠 Biens à vendre</div>
-      <span class="cnt" id="totalVend">0</span>
+      <span class="count-pill" id="totalVend">0</span>
     </div>
     <ul class="rlist" id="listVend"><li class="empty">Chargement…</li></ul>
   </div>
 
 </main>
 
-<footer>Dashboard <span>Liberty IA</span> · Accès sécurisé par agence</footer>
+<footer>Dashboard <strong>Liberty IA</strong> · Accès sécurisé par agence</footer>
 
 <script>
 const ACQ_ID  = "1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc";
@@ -244,57 +258,77 @@ function cv(row, i){
   return String(v).trim();
 }
 
+/**
+ * Normalise n'importe quelle saisie de prix en nombre.
+ * Gère : "340k", "340 000 euros", "340000", "1 million", "un million de dollars",
+ *         "1,2M", "120000 euros", "bdb", "1", "7", etc.
+ */
+function parsePrix(raw){
+  if(!raw) return null;
+  const s = String(raw).toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/,/g,".");
+
+  // Mots → chiffres
+  const wordsMap = {
+    "unmillion":1000000,"deuxmillions":2000000,"deuxmillion":2000000,
+    "unmilliard":1000000000,
+    "cent":100,"mille":1000,"dixmille":10000,"centmille":100000,
+  };
+  for(const [w,n] of Object.entries(wordsMap)){
+    if(s.replace(/[^a-z]/g,"") === w) return n;
+  }
+
+  // Extrait la partie numérique + suffixe (k / m / million / milliard)
+  const match = s.match(/^([\d.]+)\s*([a-z]*)/);
+  if(!match) return null;
+  let num = parseFloat(match[1]);
+  if(isNaN(num)) return null;
+  const suffix = match[2].replace(/euros?|dollars?|\$|€|eur/g,"");
+
+  if(suffix === "k" || suffix === "millier") num *= 1_000;
+  else if(suffix === "m" || suffix === "million" || suffix === "millions") num *= 1_000_000;
+  else if(suffix === "milliard" || suffix === "milliards") num *= 1_000_000_000;
+
+  return num;
+}
+
 function fmtPrix(raw){
   if(!raw) return "—";
-  const n = parseFloat(String(raw).replace(/\s/g,"").replace(",","."));
-  return isNaN(n) ? "—" : n.toLocaleString("fr-FR") + " €";
+  const n = parsePrix(raw);
+  if(n === null) return "—";
+  // Affichage compact pour les grands nombres
+  if(n >= 1_000_000) return (n/1_000_000).toLocaleString("fr-FR",{maximumFractionDigits:2}) + " M€";
+  if(n >= 1_000) return n.toLocaleString("fr-FR") + " €";
+  return n.toLocaleString("fr-FR") + " €";
 }
 
-// Classif par délai (col H = index 7)
-// "Immédiatement" → Chaud
-// "1-3 mois"      → Tiède
-// "3-6 mois"      → Froid
 function classifBadge(delai){
-  const d = delai.toLowerCase().replace(/\s/g,"");
-  if(d.includes("immédiat") || d.includes("immediat")){
-    return { cls:"badge-hot",  label:"Chaud",  type:"hot"  };
-  }
-  if(d.includes("1") && d.includes("3")){
-    return { cls:"badge-warm", label:"Tiède",  type:"warm" };
-  }
-  return { cls:"badge-cold", label:"Froid",  type:"cold" };
+  const d = (delai||"").toLowerCase().replace(/\s/g,"");
+  if(d.includes("immédiat") || d.includes("immediat"))
+    return { cls:"b-hot",  label:"Chaud" , type:"hot"  };
+  if((d.includes("1") || d.includes("un")) && d.includes("3"))
+    return { cls:"b-warm", label:"Tiède" , type:"warm" };
+  return   { cls:"b-cold", label:"Froid" , type:"cold" };
 }
 
-// ACQUÉREURS
-// A(0)=Horodateur B(1)=Prénom C(2)=Nom D(3)=Budget E(4)=Secteur
-// F(5)=Type bien G(6)=Ville H(7)=Délai → classification J(9)=RÉF DOSSIER
-// (structure exacte peut varier — le filtre agence reste col J index 9)
 async function loadAcq(ag){
   const el = document.getElementById("listAcq");
   try{
     const tbl = await fetchSheet(ACQ_ID, "Réponses au formulaire 2");
     const rows = (tbl.rows||[]).filter(r => cv(r,9).toUpperCase() === ag);
-
     let hot=0, warm=0, cold=0;
-    const html = rows.map(r => {
-      const prenom  = cv(r,1);
-      const nom     = cv(r,2);
-      const budget  = cv(r,3);
-      const secteur = cv(r,4);
-      const date    = cv(r,0);
-      const delai   = cv(r,7); // col H = délai d'achat
-
+    const items = rows.map(r => {
+      const prenom  = cv(r,1), nom = cv(r,2);
+      const budget  = cv(r,3), secteur = cv(r,4), date = cv(r,0), delai = cv(r,7);
       const c = classifBadge(delai);
-      if(c.type==="hot")  hot++;
-      else if(c.type==="warm") warm++;
-      else cold++;
-
-      return `<li class="ritem">
+      if(c.type==="hot") hot++; else if(c.type==="warm") warm++; else cold++;
+      return `<li class="rrow">
         <div class="rleft">
           <div class="rname">${prenom} ${nom}</div>
           <div class="rmeta">
-            ${budget  ? `<span class="tag">${budget}</span>` : ""}
-            ${secteur ? `<span>${secteur}</span>` : ""}
+            ${budget  ? `<span class="chip">${budget}</span>` : ""}
+            ${secteur ? `<span class="ville">${secteur}</span>` : ""}
           </div>
         </div>
         <div class="rright">
@@ -303,47 +337,36 @@ async function loadAcq(ag){
         </div>
       </li>`;
     });
-
     document.getElementById("cHot").textContent  = hot;
     document.getElementById("cWarm").textContent = warm;
     document.getElementById("cCold").textContent = cold;
     document.getElementById("totalAcq").textContent = rows.length;
-    el.innerHTML = html.length ? html.join("") : `<li class="empty">Aucun acquéreur enregistré.</li>`;
+    el.innerHTML = items.length ? items.join("") : `<li class="empty">Aucun acquéreur enregistré.</li>`;
   } catch(e){
     el.innerHTML = `<li class="empty">Erreur de chargement.</li>`;
     ["cHot","cWarm","cCold"].forEach(id => document.getElementById(id).textContent = "0");
   }
 }
 
-// VENDEURS
-// A(0)=Horodateur B(1)=Prénom+Nom C(2)=Email [masqué] D(3)=Tel [masqué]
-// E(4)=Type de bien F(5)=Adresse G(6)=Prix souhaité H(7)=Délai
-// I(8)=Déjà en agence J(9)=Agence K(10)=RÉF DOSSIER
 async function loadVend(ag){
   const el = document.getElementById("listVend");
   try{
     const tbl = await fetchSheet(VEND_ID, "Vendeurs");
     const rows = (tbl.rows||[]).filter(r => cv(r,10).toUpperCase() === ag);
-
-    const html = rows.map(r => {
-      const nom    = cv(r,1);
-      const type   = cv(r,4);
-      const adresse= cv(r,5);
-      const prix   = cv(r,6);
-      const delai  = cv(r,7);
-      const date   = cv(r,0);
-
+    const items = rows.map(r => {
+      const nom    = cv(r,1), type = cv(r,4);
+      const adresse= cv(r,5), prix = cv(r,6);
+      const delai  = cv(r,7), date = cv(r,0);
       const ville = adresse
         ? adresse.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).pop() || adresse
         : "—";
-
-      return `<li class="ritem">
+      return `<li class="rrow">
         <div class="rleft">
           <div class="rname">${nom||"—"}</div>
           <div class="rmeta">
-            ${type  ? `<span class="tag">${type}</span>` : ""}
-            <span>${ville}</span>
-            ${delai ? `<span style="font-size:10px">${delai}</span>` : ""}
+            ${type  ? `<span class="chip">${type}</span>` : ""}
+            <span class="ville">${ville}</span>
+            ${delai ? `<span class="delai-txt">${delai}</span>` : ""}
           </div>
         </div>
         <div class="rright">
@@ -352,9 +375,8 @@ async function loadVend(ag){
         </div>
       </li>`;
     });
-
     document.getElementById("totalVend").textContent = rows.length;
-    el.innerHTML = html.length ? html.join("") : `<li class="empty">Aucun bien enregistré.</li>`;
+    el.innerHTML = items.length ? items.join("") : `<li class="empty">Aucun bien enregistré.</li>`;
   } catch(e){
     el.innerHTML = `<li class="empty">Erreur de chargement.</li>`;
     document.getElementById("totalVend").textContent = "0";
