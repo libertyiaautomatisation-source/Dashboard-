@@ -3,637 +3,319 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liberty IA — Dashboard Agence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Liberty IA — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0c10;
-    --surface: #10141c;
-    --surface2: #161b26;
-    --border: #1e2535;
-    --accent: #3B5BDB;
-    --accent2: #4dabf7;
-    --green: #2dd4a0;
-    --orange: #f7a94d;
-    --red: #f76d6d;
-    --text: #e8eaf0;
-    --muted: #5a6380;
-    --mono: 'DM Mono', monospace;
-    --sans: 'Syne', sans-serif;
-  }
-
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
+html { background:#0a0c10 !important; }
 body {
-background: var(–bg);
-color: var(–text);
-font-family: var(–sans);
-min-height: 100vh;
-overflow-x: hidden;
+  background:#0a0c10 !important;
+  color:#e8eaf0 !important;
+  font-family:'Syne',sans-serif;
+  margin:0; padding:0;
+  min-height:100vh;
+  -webkit-text-size-adjust:100%;
 }
-
-/* NOISE OVERLAY */
-body::before {
-content: ‘’;
-position: fixed;
-inset: 0;
-background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.03’/%3E%3C/svg%3E”);
-pointer-events: none;
-z-index: 0;
-opacity: 0.4;
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#0a0c10; --surface:#10141c; --surface2:#161b26;
+  --border:#1e2535; --accent:#3B5BDB; --blue:#4dabf7;
+  --green:#2dd4a0; --orange:#f7a94d; --red:#f76d6d;
+  --text:#e8eaf0; --muted:#5a6380;
+  --mono:'DM Mono',monospace;
 }
-
 /* HEADER */
 header {
-position: relative;
-z-index: 10;
-padding: 24px 32px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom: 1px solid var(–border);
-background: linear-gradient(180deg, rgba(59,91,219,0.08) 0%, transparent 100%);
+  padding:16px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:#0a0c10;
+  position:sticky; top:0; z-index:100;
 }
-
-.logo-group {
-display: flex;
-align-items: center;
-gap: 12px;
-}
-
+.logo { display:flex; align-items:center; gap:10px; }
 .logo-mark {
-width: 36px;
-height: 36px;
-background: var(–accent);
-border-radius: 8px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 16px;
-font-weight: 800;
-letter-spacing: -1px;
-color: #fff;
+  width:32px; height:32px; background:var(--accent); border-radius:7px;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:15px; color:#fff; flex-shrink:0;
+}
+.logo-name { font-size:16px; font-weight:700; color:var(--text); }
+.logo-name em { color:var(--blue); font-style:normal; }
+.agency-pill {
+  display:flex; align-items:center; gap:6px;
+  padding:5px 12px; background:var(--surface);
+  border:1px solid var(--border); border-radius:99px;
+  font-family:var(--mono); font-size:11px; color:var(--muted);
+  white-space:nowrap; max-width:55%; overflow:hidden; text-overflow:ellipsis;
+}
+.live-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--green); flex-shrink:0;
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* MAIN */
+main { max-width:680px; margin:0 auto; padding:24px 14px 60px; }
+
+/* SECTION LABEL */
+.slabel {
+font-family:var(–mono); font-size:10px; letter-spacing:2px;
+text-transform:uppercase; color:var(–muted);
+margin-bottom:14px; display:flex; align-items:center; gap:8px;
+}
+.slabel::after { content:’’; flex:1; height:1px; background:var(–border); }
+
+/* STATS */
+.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:24px; }
+.stat {
+background:var(–surface); border:1px solid var(–border);
+border-radius:12px; padding:14px 12px; position:relative; overflow:hidden;
+}
+.stat::after { content:’’; position:absolute; top:0; left:0; right:0; height:2px; }
+.stat.hot::after  { background:var(–red); }
+.stat.warm::after { background:var(–orange); }
+.stat.cold::after { background:var(–blue); }
+.stat-lbl { font-family:var(–mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.stat.hot  .stat-lbl { color:var(–red); }
+.stat.warm .stat-lbl { color:var(–orange); }
+.stat.cold .stat-lbl { color:var(–blue); }
+.stat-num { font-size:34px; font-weight:800; letter-spacing:-2px; line-height:1; }
+.stat.hot  .stat-num { color:var(–red); }
+.stat.warm .stat-num { color:var(–orange); }
+.stat.cold .stat-num { color:var(–blue); }
+.stat-sub { font-size:10px; color:var(–muted); margin-top:4px; }
+
+/* CARD */
+.card { background:var(–surface); border:1px solid var(–border); border-radius:12px; overflow:hidden; margin-bottom:28px; }
+.card-head {
+padding:13px 16px; border-bottom:1px solid var(–border);
+display:flex; align-items:center; justify-content:space-between;
+background:var(–surface2);
+}
+.card-title { font-size:13px; font-weight:700; display:flex; align-items:center; gap:7px; }
+.cnt {
+font-family:var(–mono); font-size:10px; padding:2px 8px;
+border-radius:99px; background:var(–bg); border:1px solid var(–border); color:var(–muted);
 }
 
-.logo-text {
-font-size: 17px;
-font-weight: 700;
-letter-spacing: -0.3px;
+/* ROW LIST */
+.rlist { list-style:none; }
+.ritem {
+padding:13px 16px; border-bottom:1px solid var(–border);
+display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
 }
-
-.logo-text span {
-color: var(–accent2);
+.ritem:last-child { border-bottom:none; }
+.rleft { flex:1; min-width:0; }
+.rname { font-size:14px; font-weight:600; color:var(–text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rmeta { font-size:11px; color:var(–muted); margin-top:4px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.tag {
+font-family:var(–mono); font-size:10px; padding:2px 7px;
+border-radius:4px; background:var(–surface2); border:1px solid var(–border); color:var(–muted);
 }
-
-.agency-badge {
-display: flex;
-align-items: center;
-gap: 8px;
-padding: 6px 14px;
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 99px;
-font-family: var(–mono);
-font-size: 12px;
-color: var(–muted);
-}
-
-.agency-badge .dot {
-width: 6px;
-height: 6px;
-border-radius: 50%;
-background: var(–green);
-animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.3; }
-}
-
-/* MAIN LAYOUT */
-main {
-position: relative;
-z-index: 1;
-max-width: 1100px;
-margin: 0 auto;
-padding: 36px 24px 60px;
-}
-
-/* SECTION TITLES */
-.section-label {
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(–muted);
-margin-bottom: 16px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.section-label::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: var(–border);
-max-width: 200px;
-}
-
-/* STATS GRID */
-.stats-grid {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 12px;
-margin-bottom: 36px;
-}
-
-.stat-card {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 12px;
-padding: 20px;
-position: relative;
-overflow: hidden;
-transition: border-color 0.2s;
-}
-
-.stat-card:hover {
-border-color: var(–accent);
-}
-
-.stat-card::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 0; right: 0;
-height: 2px;
-}
-
-.stat-card.hot::before { background: var(–red); }
-.stat-card.warm::before { background: var(–orange); }
-.stat-card.cold::before { background: var(–accent2); }
-
-.stat-type {
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-margin-bottom: 10px;
-}
-
-.stat-card.hot .stat-type { color: var(–red); }
-.stat-card.warm .stat-type { color: var(–orange); }
-.stat-card.cold .stat-type { color: var(–accent2); }
-
-.stat-value {
-font-size: 42px;
-font-weight: 800;
-line-height: 1;
-letter-spacing: -2px;
-margin-bottom: 4px;
-}
-
-.stat-card.hot .stat-value { color: var(–red); }
-.stat-card.warm .stat-value { color: var(–orange); }
-.stat-card.cold .stat-value { color: var(–accent2); }
-
-.stat-label {
-font-size: 12px;
-color: var(–muted);
-}
-
-/* LEADS TABLE */
-.table-wrapper {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 14px;
-overflow: hidden;
-margin-bottom: 36px;
-}
-
-.table-header-bar {
-padding: 16px 20px;
-border-bottom: 1px solid var(–border);
-display: flex;
-align-items: center;
-justify-content: space-between;
-}
-
-.table-title {
-font-size: 13px;
-font-weight: 700;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.table-count {
-font-family: var(–mono);
-font-size: 11px;
-color: var(–muted);
-background: var(–surface2);
-padding: 3px 10px;
-border-radius: 99px;
-border: 1px solid var(–border);
-}
-
-table {
-width: 100%;
-border-collapse: collapse;
-font-size: 13px;
-}
-
-thead th {
-padding: 10px 16px;
-text-align: left;
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-color: var(–muted);
-background: var(–surface2);
-border-bottom: 1px solid var(–border);
-}
-
-tbody tr {
-border-bottom: 1px solid var(–border);
-transition: background 0.15s;
-}
-
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: rgba(59,91,219,0.04); }
-
-td {
-padding: 12px 16px;
-vertical-align: middle;
-}
-
+.rright { display:flex; flex-direction:column; align-items:flex-end; gap:5px; flex-shrink:0; }
 .badge {
-display: inline-flex;
-align-items: center;
-gap: 5px;
-padding: 3px 9px;
-border-radius: 99px;
-font-family: var(–mono);
-font-size: 11px;
-font-weight: 500;
+font-family:var(–mono); font-size:10px; padding:3px 9px;
+border-radius:99px; font-weight:500; display:flex; align-items:center; gap:4px;
 }
+.badge::before { content:’’; width:5px; height:5px; border-radius:50%; background:currentColor; }
+.badge-hot  { background:rgba(247,109,109,.12); color:var(–red);    border:1px solid rgba(247,109,109,.25); }
+.badge-warm { background:rgba(247,169,77,.12);  color:var(–orange); border:1px solid rgba(247,169,77,.25); }
+.badge-cold { background:rgba(77,171,247,.12);  color:var(–blue);   border:1px solid rgba(77,171,247,.25); }
+.price { font-family:var(–mono); font-size:12px; color:var(–green); font-weight:500; }
+.ddate { font-family:var(–mono); font-size:10px; color:var(–muted); }
 
-.badge-hot { background: rgba(247,109,109,0.12); color: var(–red); border: 1px solid rgba(247,109,109,0.25); }
-.badge-warm { background: rgba(247,169,77,0.12); color: var(–orange); border: 1px solid rgba(247,169,77,0.25); }
-.badge-cold { background: rgba(77,171,247,0.12); color: var(–accent2); border: 1px solid rgba(77,171,247,0.25); }
-
-.badge::before {
-content: ‘’;
-width: 5px;
-height: 5px;
-border-radius: 50%;
-background: currentColor;
-}
-
-.name-cell { font-weight: 600; }
-.sub-text { font-size: 11px; color: var(–muted); margin-top: 2px; }
-
-/* VENDEURS SECTION */
-.vendeurs-header {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-bottom: 4px;
-}
-
-.total-pill {
-font-family: var(–mono);
-font-size: 11px;
-padding: 3px 12px;
-border-radius: 99px;
-background: rgba(45,212,160,0.1);
-color: var(–green);
-border: 1px solid rgba(45,212,160,0.25);
-}
-
-/* PRICE CELL */
-.price {
-font-family: var(–mono);
-font-size: 12px;
-color: var(–green);
-font-weight: 500;
-}
-
-/* TYPE TAG */
-.type-tag {
-font-family: var(–mono);
-font-size: 10px;
-padding: 2px 8px;
-background: var(–surface2);
-border: 1px solid var(–border);
-border-radius: 4px;
-color: var(–muted);
-}
-
-/* EMPTY STATE */
-.empty-state {
-padding: 40px;
-text-align: center;
-color: var(–muted);
-font-size: 13px;
-}
+.empty { padding:30px 16px; text-align:center; color:var(–muted); font-size:12px; font-family:var(–mono); }
 
 /* FOOTER */
 footer {
-position: relative;
-z-index: 1;
-text-align: center;
-padding: 20px;
-border-top: 1px solid var(–border);
-font-family: var(–mono);
-font-size: 11px;
-color: var(–muted);
+text-align:center; padding:18px 16px;
+font-family:var(–mono); font-size:10px; color:var(–muted);
+border-top:1px solid var(–border);
 }
-
-footer span { color: var(–accent2); }
-
-/* NO DATA */
-.loading-row td {
-color: var(–muted);
-font-style: italic;
-font-size: 12px;
-text-align: center;
-}
-
-/* RESPONSIVE */
-@media (max-width: 640px) {
-.stats-grid { grid-template-columns: 1fr; }
-header { flex-direction: column; gap: 12px; align-items: flex-start; }
-.stat-value { font-size: 32px; }
-}
+footer span { color:var(–blue); }
 </style>
 
 </head>
 <body>
 
 <header>
-  <div class="logo-group">
+  <div class="logo">
     <div class="logo-mark">L</div>
-    <div class="logo-text">Liberty <span>IA</span></div>
+    <div class="logo-name">Liberty <em>IA</em></div>
   </div>
-  <div class="agency-badge">
-    <div class="dot"></div>
-    <span id="agencyLabel">Chargement…</span>
+  <div class="agency-pill">
+    <div class="live-dot"></div>
+    <span id="agencyLabel">…</span>
   </div>
 </header>
 
 <main>
 
-  <!-- ACQUÉREURS -->
+  <div class="slabel">Acquéreurs</div>
 
-  <div class="section-label">Acquéreurs — Classification</div>
-
-  <div class="stats-grid" id="statsGrid">
-    <div class="stat-card hot">
-      <div class="stat-type">🔴 Chauds</div>
-      <div class="stat-value" id="countHot">—</div>
-      <div class="stat-label">Leads prioritaires</div>
+  <div class="stats-row">
+    <div class="stat hot">
+      <div class="stat-lbl">🔴 Chauds</div>
+      <div class="stat-num" id="cHot">—</div>
+      <div class="stat-sub">Prioritaires</div>
     </div>
-    <div class="stat-card warm">
-      <div class="stat-type">🟠 Tièdes</div>
-      <div class="stat-value" id="countWarm">—</div>
-      <div class="stat-label">À relancer</div>
+    <div class="stat warm">
+      <div class="stat-lbl">🟠 Tièdes</div>
+      <div class="stat-num" id="cWarm">—</div>
+      <div class="stat-sub">À relancer</div>
     </div>
-    <div class="stat-card cold">
-      <div class="stat-type">🔵 Froids</div>
-      <div class="stat-value" id="countCold">—</div>
-      <div class="stat-label">En veille</div>
+    <div class="stat cold">
+      <div class="stat-lbl">🔵 Froids</div>
+      <div class="stat-num" id="cCold">—</div>
+      <div class="stat-sub">En veille</div>
     </div>
   </div>
 
-  <div class="table-wrapper">
-    <div class="table-header-bar">
-      <div class="table-title">👤 Leads acquéreurs <span id="totalAcquereurs" class="table-count">0</span></div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">👤 Leads acquéreurs</div>
+      <span class="cnt" id="totalAcq">0</span>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Budget</th>
-          <th>Secteur</th>
-          <th>Statut</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody id="acqueursBody">
-        <tr class="loading-row"><td colspan="5">Chargement des données…</td></tr>
-      </tbody>
-    </table>
+    <ul class="rlist" id="listAcq"><li class="empty">Chargement…</li></ul>
   </div>
 
-  <!-- VENDEURS -->
+  <div class="slabel">Vendeurs</div>
 
-  <div class="vendeurs-header">
-    <div class="section-label" style="margin-bottom:0; flex:1">Vendeurs — Biens à vendre</div>
-    <div class="total-pill" id="totalVendeursPill">0 bien(s)</div>
-  </div>
-  <div style="margin-bottom: 16px;"></div>
-
-  <div class="table-wrapper">
-    <div class="table-header-bar">
-      <div class="table-title">🏠 Portefeuille vendeurs <span id="totalVendeurs" class="table-count">0</span></div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">🏠 Biens à vendre</div>
+      <span class="cnt" id="totalVend">0</span>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Vendeur</th>
-          <th>Type de bien</th>
-          <th>Ville</th>
-          <th>Prix demandé</th>
-          <th>Date dépôt</th>
-        </tr>
-      </thead>
-      <tbody id="vendeursBody">
-        <tr class="loading-row"><td colspan="5">Chargement des données…</td></tr>
-      </tbody>
-    </table>
+    <ul class="rlist" id="listVend"><li class="empty">Chargement…</li></ul>
   </div>
 
 </main>
 
-<footer>
-  Dashboard généré par <span>Liberty IA Automatisation</span> · Données temps réel · Accès sécurisé par agence
-</footer>
+<footer>Dashboard <span>Liberty IA</span> · Accès sécurisé par agence</footer>
 
 <script>
-// ─── CONFIG ────────────────────────────────────────────────────────────────
-const SHEET_ID_ACQUEREURS = "1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc";
-const SHEET_ID_VENDEURS    = "1m5WbIcjuj3LgsHnXO3rmxO2X5bdkCJ0-4mM6K3bs0XI";
-
-// Mapping agence → colonne Classification (lettre) dans RÉSUMÉ SEMAINE
-const AGENCY_COL = {
-  VER: "L", AGD: "M", FON: "N", IMS: "O", MIS: "P",
-  BIG: "Q", ALG: "R", RHO: "S", TNS: "T"
+const ACQ_ID  = "1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc";
+const VEND_ID = "1m5WbIcjuj3LgsHnXO3rmxO2X5bdkCJ0-4mM6K3bs0XI";
+const NAMES   = {
+  VER:"Vercors Immobilier",AGD:"AGDA",FON:"Foncia",
+  IMS:"Immosud",MIS:"Mistral Immo",ALG:"Alger Immo",
+  RHO:"Rhones Immo",TNS:"Tunis Immo",BIG:"Big Ben Immo"
 };
 
-const AGENCY_NAMES = {
-  VER: "Vercors Immobilier", AGD: "AGDA", FON: "Foncia",
-  IMS: "Immosud", MIS: "Mistral Immo", ALG: "Alger Immo",
-  RHO: "Rhones Immo", TNS: "Tunis Immo", BIG: "Big Ben Immo"
-};
+function getAgence(){ return (new URLSearchParams(location.search).get("agence")||"").toUpperCase(); }
 
-// ─── UTILS ─────────────────────────────────────────────────────────────────
-function getAgence() {
-  const params = new URLSearchParams(window.location.search);
-  return (params.get("agence") || "").toUpperCase();
+async function fetchSheet(id, tab){
+  const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}`;
+  const t=await (await fetch(url)).text();
+  return JSON.parse(t.substring(47).slice(0,-2)).table;
 }
 
-function sheetUrl(sheetId, sheetName) {
-  return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-}
-
-async function fetchSheet(sheetId, sheetName) {
-  const url = sheetUrl(sheetId, sheetName);
-  const res  = await fetch(url);
-  const text = await res.text();
-  const json = JSON.parse(text.substring(47).slice(0, -2));
-  return json.table;
-}
-
-function colToIndex(letter) {
-  // Single letter A=0, B=1, …, Z=25
-  return letter.toUpperCase().charCodeAt(0) - 65;
-}
-
-function cellVal(row, idx) {
-  if (!row.c || !row.c[idx] || row.c[idx].v === null) return "";
-  const v = row.c[idx].v;
-  // Google Sheets date format: Date(2026,4,15) → 2026-05-15
-  if (typeof v === "string" && v.startsWith("Date(")) {
-    const parts = v.replace("Date(","").replace(")","").split(",");
-    const y = parts[0], m = String(parseInt(parts[1])+1).padStart(2,"0"), d = String(parts[2]).padStart(2,"0");
-    return `${d}/${m}/${y}`;
+function cv(row,i){
+  if(!row.c||!row.c[i]||row.c[i].v===null||row.c[i].v===undefined) return "";
+  const v=row.c[i].v;
+  if(typeof v==="string"&&v.startsWith("Date(")){
+    const p=v.replace("Date(","").replace(")","").split(",");
+    return `${String(p[2]).padStart(2,"0")}/${String(+p[1]+1).padStart(2,"0")}/${p[0]}`;
   }
-  return v;
+  return String(v).trim();
 }
 
-// ─── RENDER ACQUÉREURS ─────────────────────────────────────────────────────
-async function loadAcquereurs(agence) {
-  const tbody = document.getElementById("acqueursBody");
-  try {
-    const table = await fetchSheet(SHEET_ID_ACQUEREURS, "Réponses au formulaire 2");
-    // Col indexes (0-based): A=Horodateur, B=Prénom, C=Nom, D=Budget, E=Secteur, F=Classification, etc.
-    // We filter by RÉF DOSSIER = agence
-    // Column J = RÉF DOSSIER (index 9)
-    const rows = (table.rows || []).filter(r => {
-      const ref = String(cellVal(r, 9)).toUpperCase().trim();
-      return ref === agence;
+function fmtPrix(raw){
+  if(!raw) return "—";
+  const n=parseFloat(String(raw).replace(/\s/g,"").replace(",","."));
+  return isNaN(n)?"—":n.toLocaleString("fr-FR")+" €";
+}
+
+// ACQUÉREURS
+// A(0)=Horodateur B(1)=Prénom C(2)=Nom D(3)=Budget E(4)=Secteur
+// F(5)=Classification … J(9)=RÉF DOSSIER
+async function loadAcq(ag){
+  const el=document.getElementById("listAcq");
+  try{
+    const tbl=await fetchSheet(ACQ_ID,"Réponses au formulaire 2");
+    const rows=(tbl.rows||[]).filter(r=>cv(r,9).toUpperCase()===ag);
+    let hot=0,warm=0,cold=0;
+    const html=rows.map(r=>{
+      const nom=`${cv(r,1)} ${cv(r,2)}`.trim();
+      const budget=cv(r,3), secteur=cv(r,4), date=cv(r,0);
+      const cl=cv(r,5).toLowerCase();
+      let badge="";
+      if(cl.includes("chaud")||cl.includes("hot")){hot++;badge=`<span class="badge badge-hot">Chaud</span>`;}
+      else if(cl.includes("tiède")||cl.includes("tiede")||cl.includes("warm")){warm++;badge=`<span class="badge badge-warm">Tiède</span>`;}
+      else{cold++;badge=`<span class="badge badge-cold">Froid</span>`;}
+      return `<li class="ritem">
+        <div class="rleft">
+          <div class="rname">${nom||"—"}</div>
+          <div class="rmeta">
+            ${budget?`<span class="tag">${budget}</span>`:""}
+            ${secteur?`<span>${secteur}</span>`:""}
+          </div>
+        </div>
+        <div class="rright">${badge}<span class="ddate">${date}</span></div>
+      </li>`;
     });
-
-    let hot = 0, warm = 0, cold = 0;
-    const htmlRows = rows.map(r => {
-      const date    = cellVal(r, 0);
-      const prenom  = cellVal(r, 1);
-      const nom     = cellVal(r, 2);
-      const budget  = cellVal(r, 3);
-      const secteur = cellVal(r, 4);
-      const classif = String(cellVal(r, 5)).toLowerCase();
-
-      let badge = "";
-      if (classif.includes("chaud") || classif.includes("hot")) { hot++; badge = `<span class="badge badge-hot">Chaud</span>`; }
-      else if (classif.includes("tiède") || classif.includes("tiede") || classif.includes("warm")) { warm++; badge = `<span class="badge badge-warm">Tiède</span>`; }
-      else { cold++; badge = `<span class="badge badge-cold">Froid</span>`; }
-
-      return `<tr>
-        <td><div class="name-cell">${prenom} ${nom}</div></td>
-        <td>${budget || "—"}</td>
-        <td>${secteur || "—"}</td>
-        <td>${badge}</td>
-        <td><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">${date || "—"}</span></td>
-      </tr>`;
-    });
-
-    document.getElementById("countHot").textContent  = hot;
-    document.getElementById("countWarm").textContent = warm;
-    document.getElementById("countCold").textContent = cold;
-    document.getElementById("totalAcquereurs").textContent = rows.length;
-
-    tbody.innerHTML = htmlRows.length
-      ? htmlRows.join("")
-      : `<tr class="loading-row"><td colspan="5">Aucun acquéreur enregistré pour cette agence.</td></tr>`;
-
-  } catch(e) {
-    tbody.innerHTML = `<tr class="loading-row"><td colspan="5">Erreur de chargement. Vérifiez les droits du Google Sheet.</td></tr>`;
-    document.getElementById("countHot").textContent  = "0";
-    document.getElementById("countWarm").textContent = "0";
-    document.getElementById("countCold").textContent = "0";
+    document.getElementById("cHot").textContent=hot;
+    document.getElementById("cWarm").textContent=warm;
+    document.getElementById("cCold").textContent=cold;
+    document.getElementById("totalAcq").textContent=rows.length;
+    el.innerHTML=html.length?html.join(""):`<li class="empty">Aucun acquéreur enregistré.</li>`;
+  }catch(e){
+    el.innerHTML=`<li class="empty">Erreur de chargement.</li>`;
+    ["cHot","cWarm","cCold"].forEach(id=>document.getElementById(id).textContent="0");
   }
 }
 
-// ─── RENDER VENDEURS ───────────────────────────────────────────────────────
-async function loadVendeurs(agence) {
-  const tbody = document.getElementById("vendeursBody");
-  try {
-    const table = await fetchSheet(SHEET_ID_VENDEURS, "Vendeurs");
-    // Col K = RÉF DOSSIER (index 10)
-    // Cols attendues (RGPD : pas email/tel) :
-    //   A=Horodateur, B=Prénom, C=Nom, D=Type bien, E=Ville, F=Prix, G=Surface, H=Nb pièces
-    // (à adapter selon votre structure exacte)
-    const rows = (table.rows || []).filter(r => {
-      const ref = String(cellVal(r, 10)).toUpperCase().trim();
-      return ref === agence;
-    });
-
-    const htmlRows = rows.map(r => {
-      const date   = cellVal(r, 0);
-      const prenom = cellVal(r, 1);
-      const nom    = cellVal(r, 2);
-      const type   = cellVal(r, 3);
-      const ville  = cellVal(r, 4);
-      const prix   = cellVal(r, 5);
-
-      const prixFmt = prix
-        ? Number(String(prix).replace(/\s/g,"").replace(",",".")).toLocaleString("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0})
+// VENDEURS
+// A(0)=Horodateur  B(1)=Prénom+Nom  C(2)=Email [masqué RGPD]
+// D(3)=Téléphone [masqué RGPD]  E(4)=Type de bien  F(5)=Adresse
+// G(6)=Prix souhaité  H(7)=Délai de vente  I(8)=Déjà en agence
+// J(9)=Agence  K(10)=RÉF DOSSIER
+async function loadVend(ag){
+  const el=document.getElementById("listVend");
+  try{
+    const tbl=await fetchSheet(VEND_ID,"Vendeurs");
+    const rows=(tbl.rows||[]).filter(r=>cv(r,10).toUpperCase()===ag);
+    const html=rows.map(r=>{
+      const nom   =cv(r,1);
+      const type  =cv(r,4);
+      const adresse=cv(r,5);
+      const prix  =cv(r,6);
+      const delai =cv(r,7);
+      const date  =cv(r,0);
+      // Extraire ville = dernier token de l'adresse après virgule ou espace
+      const ville=adresse
+        ? adresse.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).pop()||adresse
         : "—";
-
-      return `<tr>
-        <td><div class="name-cell">${prenom || ""} ${nom || ""}</div></td>
-        <td><span class="type-tag">${type || "—"}</span></td>
-        <td>${ville || "—"}</td>
-        <td><span class="price">${prixFmt}</span></td>
-        <td><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">${date || "—"}</span></td>
-      </tr>`;
+      return `<li class="ritem">
+        <div class="rleft">
+          <div class="rname">${nom||"—"}</div>
+          <div class="rmeta">
+            ${type?`<span class="tag">${type}</span>`:""}
+            <span>${ville}</span>
+            ${delai?`<span style="color:var(--muted);font-size:10px">${delai}</span>`:""}
+          </div>
+        </div>
+        <div class="rright">
+          <span class="price">${fmtPrix(prix)}</span>
+          <span class="ddate">${date}</span>
+        </div>
+      </li>`;
     });
-
-    document.getElementById("totalVendeurs").textContent    = rows.length;
-    document.getElementById("totalVendeursPill").textContent = `${rows.length} bien(s)`;
-
-    tbody.innerHTML = htmlRows.length
-      ? htmlRows.join("")
-      : `<tr class="loading-row"><td colspan="5">Aucun vendeur enregistré pour cette agence.</td></tr>`;
-
-  } catch(e) {
-    tbody.innerHTML = `<tr class="loading-row"><td colspan="5">Erreur de chargement. Vérifiez les droits du Google Sheet.</td></tr>`;
-    document.getElementById("totalVendeurs").textContent    = "0";
-    document.getElementById("totalVendeursPill").textContent = "0 bien(s)";
+    document.getElementById("totalVend").textContent=rows.length;
+    el.innerHTML=html.length?html.join(""):`<li class="empty">Aucun bien enregistré.</li>`;
+  }catch(e){
+    el.innerHTML=`<li class="empty">Erreur de chargement.</li>`;
+    document.getElementById("totalVend").textContent="0";
   }
 }
 
-// ─── INIT ──────────────────────────────────────────────────────────────────
-(async function init() {
-  const agence = getAgence();
-  const label  = AGENCY_NAMES[agence] || agence || "Agence inconnue";
-  document.getElementById("agencyLabel").textContent = `${agence} · ${label}`;
-  document.title = `Dashboard — ${label}`;
-
-  if (!agence) {
-    document.getElementById("acqueursBody").innerHTML  = `<tr class="loading-row"><td colspan="5">Paramètre ?agence= manquant dans l'URL.</td></tr>`;
-    document.getElementById("vendeursBody").innerHTML  = `<tr class="loading-row"><td colspan="5">Paramètre ?agence= manquant dans l'URL.</td></tr>`;
-    return;
-  }
-
-  await Promise.all([
-    loadAcquereurs(agence),
-    loadVendeurs(agence)
-  ]);
+(async function init(){
+  const ag=getAgence();
+  document.getElementById("agencyLabel").textContent=ag?`${ag} · ${NAMES[ag]||ag}`:"Agence inconnue";
+  document.title=`Dashboard — ${NAMES[ag]||ag||"Liberty IA"}`;
+  if(!ag) return;
+  await Promise.all([loadAcq(ag),loadVend(ag)]);
 })();
 </script>
 
