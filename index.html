@@ -4,136 +4,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="color-scheme" content="dark">
 <title>Liberty IA — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-html { background:#0a0c10 !important; }
-body {
-  background:#0a0c10 !important;
-  color:#e8eaf0 !important;
-  font-family:'Syne',sans-serif;
-  margin:0; padding:0;
-  min-height:100vh;
-  -webkit-text-size-adjust:100%;
+html, body {
+  background: #f4f6fb !important;
+  color: #1a1d27 !important;
+  font-family: 'Syne', sans-serif;
+  margin: 0; padding: 0;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
 }
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg:#0a0c10; --surface:#10141c; --surface2:#161b26;
-  --border:#1e2535; --accent:#3B5BDB; --blue:#4dabf7;
-  --green:#2dd4a0; --orange:#f7a94d; --red:#f76d6d;
-  --text:#e8eaf0; --muted:#5a6380;
-  --mono:'DM Mono',monospace;
+  --bg:      #f4f6fb;
+  --surface: #ffffff;
+  --surface2:#f0f2f8;
+  --border:  #e2e6f0;
+  --accent:  #3B5BDB;
+  --blue:    #3B5BDB;
+  --green:   #0ca678;
+  --orange:  #e8760a;
+  --red:     #e03131;
+  --text:    #1a1d27;
+  --muted:   #8892aa;
+  --mono:    'DM Mono', monospace;
 }
+
 /* HEADER */
 header {
-  padding:16px 18px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:1px solid var(--border);
-  background:#0a0c10;
-  position:sticky; top:0; z-index:100;
+padding: 16px 18px;
+display: flex; align-items: center; justify-content: space-between;
+border-bottom: 1px solid var(–border);
+background: #ffffff;
+position: sticky; top: 0; z-index: 100;
+box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
-.logo { display:flex; align-items:center; gap:10px; }
+.logo { display: flex; align-items: center; gap: 10px; }
 .logo-mark {
-  width:32px; height:32px; background:var(--accent); border-radius:7px;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:800; font-size:15px; color:#fff; flex-shrink:0;
+width: 32px; height: 32px; background: var(–accent); border-radius: 7px;
+display: flex; align-items: center; justify-content: center;
+font-weight: 800; font-size: 15px; color: #fff; flex-shrink: 0;
 }
-.logo-name { font-size:16px; font-weight:700; color:var(--text); }
-.logo-name em { color:var(--blue); font-style:normal; }
+.logo-name { font-size: 16px; font-weight: 700; color: var(–text); }
+.logo-name em { color: var(–accent); font-style: normal; }
 .agency-pill {
-  display:flex; align-items:center; gap:6px;
-  padding:5px 12px; background:var(--surface);
-  border:1px solid var(--border); border-radius:99px;
-  font-family:var(--mono); font-size:11px; color:var(--muted);
-  white-space:nowrap; max-width:55%; overflow:hidden; text-overflow:ellipsis;
+display: flex; align-items: center; gap: 6px;
+padding: 5px 12px; background: var(–surface2);
+border: 1px solid var(–border); border-radius: 99px;
+font-family: var(–mono); font-size: 11px; color: var(–muted);
+white-space: nowrap; max-width: 55%; overflow: hidden; text-overflow: ellipsis;
 }
 .live-dot {
-  width:6px; height:6px; border-radius:50%;
-  background:var(--green); flex-shrink:0;
-  animation:blink 2s infinite;
+width: 6px; height: 6px; border-radius: 50%;
+background: var(–green); flex-shrink: 0;
+animation: blink 2s infinite;
 }
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
 /* MAIN */
-main { max-width:680px; margin:0 auto; padding:24px 14px 60px; }
+main { max-width: 680px; margin: 0 auto; padding: 24px 14px 60px; }
 
 /* SECTION LABEL */
 .slabel {
-font-family:var(–mono); font-size:10px; letter-spacing:2px;
-text-transform:uppercase; color:var(–muted);
-margin-bottom:14px; display:flex; align-items:center; gap:8px;
+font-family: var(–mono); font-size: 10px; letter-spacing: 2px;
+text-transform: uppercase; color: var(–muted);
+margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
 }
-.slabel::after { content:’’; flex:1; height:1px; background:var(–border); }
+.slabel::after { content: ‘’; flex: 1; height: 1px; background: var(–border); }
 
 /* STATS */
-.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:24px; }
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
 .stat {
-background:var(–surface); border:1px solid var(–border);
-border-radius:12px; padding:14px 12px; position:relative; overflow:hidden;
+background: var(–surface); border: 1px solid var(–border);
+border-radius: 12px; padding: 14px 12px; position: relative; overflow: hidden;
 }
-.stat::after { content:’’; position:absolute; top:0; left:0; right:0; height:2px; }
-.stat.hot::after  { background:var(–red); }
-.stat.warm::after { background:var(–orange); }
-.stat.cold::after { background:var(–blue); }
-.stat-lbl { font-family:var(–mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
-.stat.hot  .stat-lbl { color:var(–red); }
-.stat.warm .stat-lbl { color:var(–orange); }
-.stat.cold .stat-lbl { color:var(–blue); }
-.stat-num { font-size:34px; font-weight:800; letter-spacing:-2px; line-height:1; }
-.stat.hot  .stat-num { color:var(–red); }
-.stat.warm .stat-num { color:var(–orange); }
-.stat.cold .stat-num { color:var(–blue); }
-.stat-sub { font-size:10px; color:var(–muted); margin-top:4px; }
+.stat::after { content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.stat.hot::after  { background: var(–red); }
+.stat.warm::after { background: var(–orange); }
+.stat.cold::after { background: var(–blue); }
+.stat-lbl {
+font-family: var(–mono); font-size: 9px; letter-spacing: 1.5px;
+text-transform: uppercase; margin-bottom: 8px;
+}
+.stat.hot  .stat-lbl { color: var(–red); }
+.stat.warm .stat-lbl { color: var(–orange); }
+.stat.cold .stat-lbl { color: var(–blue); }
+.stat-num { font-size: 34px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+.stat.hot  .stat-num { color: var(–red); }
+.stat.warm .stat-num { color: var(–orange); }
+.stat.cold .stat-num { color: var(–blue); }
+.stat-sub { font-size: 10px; color: var(–muted); margin-top: 4px; }
 
 /* CARD */
-.card { background:var(–surface); border:1px solid var(–border); border-radius:12px; overflow:hidden; margin-bottom:28px; }
-.card-head {
-padding:13px 16px; border-bottom:1px solid var(–border);
-display:flex; align-items:center; justify-content:space-between;
-background:var(–surface2);
+.card {
+background: var(–surface); border: 1px solid var(–border);
+border-radius: 12px; overflow: hidden; margin-bottom: 28px;
+box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
-.card-title { font-size:13px; font-weight:700; display:flex; align-items:center; gap:7px; }
+.card-head {
+padding: 13px 16px; border-bottom: 1px solid var(–border);
+display: flex; align-items: center; justify-content: space-between;
+background: var(–surface2);
+}
+.card-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 7px; }
 .cnt {
-font-family:var(–mono); font-size:10px; padding:2px 8px;
-border-radius:99px; background:var(–bg); border:1px solid var(–border); color:var(–muted);
+font-family: var(–mono); font-size: 10px; padding: 2px 8px;
+border-radius: 99px; background: var(–surface);
+border: 1px solid var(–border); color: var(–muted);
 }
 
 /* ROW LIST */
-.rlist { list-style:none; }
+.rlist { list-style: none; }
 .ritem {
-padding:13px 16px; border-bottom:1px solid var(–border);
-display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+padding: 13px 16px; border-bottom: 1px solid var(–border);
+display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
 }
-.ritem:last-child { border-bottom:none; }
-.rleft { flex:1; min-width:0; }
-.rname { font-size:14px; font-weight:600; color:var(–text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.rmeta { font-size:11px; color:var(–muted); margin-top:4px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.ritem:last-child { border-bottom: none; }
+.rleft { flex: 1; min-width: 0; }
+.rname {
+font-size: 14px; font-weight: 600; color: var(–text);
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rmeta {
+font-size: 11px; color: var(–muted); margin-top: 4px;
+display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+}
 .tag {
-font-family:var(–mono); font-size:10px; padding:2px 7px;
-border-radius:4px; background:var(–surface2); border:1px solid var(–border); color:var(–muted);
+font-family: var(–mono); font-size: 10px; padding: 2px 7px;
+border-radius: 4px; background: var(–surface2);
+border: 1px solid var(–border); color: var(–muted);
 }
-.rright { display:flex; flex-direction:column; align-items:flex-end; gap:5px; flex-shrink:0; }
+.rright { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
 .badge {
-font-family:var(–mono); font-size:10px; padding:3px 9px;
-border-radius:99px; font-weight:500; display:flex; align-items:center; gap:4px;
+font-family: var(–mono); font-size: 10px; padding: 3px 9px;
+border-radius: 99px; font-weight: 500;
+display: flex; align-items: center; gap: 4px;
 }
-.badge::before { content:’’; width:5px; height:5px; border-radius:50%; background:currentColor; }
-.badge-hot  { background:rgba(247,109,109,.12); color:var(–red);    border:1px solid rgba(247,109,109,.25); }
-.badge-warm { background:rgba(247,169,77,.12);  color:var(–orange); border:1px solid rgba(247,169,77,.25); }
-.badge-cold { background:rgba(77,171,247,.12);  color:var(–blue);   border:1px solid rgba(77,171,247,.25); }
-.price { font-family:var(–mono); font-size:12px; color:var(–green); font-weight:500; }
-.ddate { font-family:var(–mono); font-size:10px; color:var(–muted); }
+.badge::before { content: ‘’; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.badge-hot  { background: rgba(224,49,49,.08);  color: var(–red);    border: 1px solid rgba(224,49,49,.2); }
+.badge-warm { background: rgba(232,118,10,.08); color: var(–orange); border: 1px solid rgba(232,118,10,.2); }
+.badge-cold { background: rgba(59,91,219,.08);  color: var(–blue);   border: 1px solid rgba(59,91,219,.2); }
+.price { font-family: var(–mono); font-size: 12px; color: var(–green); font-weight: 600; }
+.ddate { font-family: var(–mono); font-size: 10px; color: var(–muted); }
 
-.empty { padding:30px 16px; text-align:center; color:var(–muted); font-size:12px; font-family:var(–mono); }
+.empty { padding: 30px 16px; text-align: center; color: var(–muted); font-size: 12px; font-family: var(–mono); }
 
 /* FOOTER */
 footer {
-text-align:center; padding:18px 16px;
-font-family:var(–mono); font-size:10px; color:var(–muted);
-border-top:1px solid var(–border);
+text-align: center; padding: 18px 16px;
+font-family: var(–mono); font-size: 10px; color: var(–muted);
+border-top: 1px solid var(–border);
 }
-footer span { color:var(–blue); }
+footer span { color: var(–accent); }
 </style>
 
 </head>
@@ -158,17 +181,17 @@ footer span { color:var(–blue); }
     <div class="stat hot">
       <div class="stat-lbl">🔴 Chauds</div>
       <div class="stat-num" id="cHot">—</div>
-      <div class="stat-sub">Prioritaires</div>
+      <div class="stat-sub">Immédiat</div>
     </div>
     <div class="stat warm">
       <div class="stat-lbl">🟠 Tièdes</div>
       <div class="stat-num" id="cWarm">—</div>
-      <div class="stat-sub">À relancer</div>
+      <div class="stat-sub">1–3 mois</div>
     </div>
     <div class="stat cold">
       <div class="stat-lbl">🔵 Froids</div>
       <div class="stat-num" id="cCold">—</div>
-      <div class="stat-sub">En veille</div>
+      <div class="stat-sub">3–6 mois</div>
     </div>
   </div>
 
@@ -198,24 +221,24 @@ footer span { color:var(–blue); }
 const ACQ_ID  = "1-kSmjWfoaHe6fJYt1Qbuj1ZEOA2V815zxHDrXQ0j_Kc";
 const VEND_ID = "1m5WbIcjuj3LgsHnXO3rmxO2X5bdkCJ0-4mM6K3bs0XI";
 const NAMES   = {
-  VER:"Vercors Immobilier",AGD:"AGDA",FON:"Foncia",
-  IMS:"Immosud",MIS:"Mistral Immo",ALG:"Alger Immo",
-  RHO:"Rhones Immo",TNS:"Tunis Immo",BIG:"Big Ben Immo"
+  VER:"Vercors Immobilier", AGD:"AGDA", FON:"Foncia",
+  IMS:"Immosud", MIS:"Mistral Immo", ALG:"Alger Immo",
+  RHO:"Rhones Immo", TNS:"Tunis Immo", BIG:"Big Ben Immo"
 };
 
 function getAgence(){ return (new URLSearchParams(location.search).get("agence")||"").toUpperCase(); }
 
 async function fetchSheet(id, tab){
-  const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}`;
-  const t=await (await fetch(url)).text();
+  const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}`;
+  const t = await (await fetch(url)).text();
   return JSON.parse(t.substring(47).slice(0,-2)).table;
 }
 
-function cv(row,i){
-  if(!row.c||!row.c[i]||row.c[i].v===null||row.c[i].v===undefined) return "";
-  const v=row.c[i].v;
-  if(typeof v==="string"&&v.startsWith("Date(")){
-    const p=v.replace("Date(","").replace(")","").split(",");
+function cv(row, i){
+  if(!row.c || !row.c[i] || row.c[i].v === null || row.c[i].v === undefined) return "";
+  const v = row.c[i].v;
+  if(typeof v === "string" && v.startsWith("Date(")){
+    const p = v.replace("Date(","").replace(")","").split(",");
     return `${String(p[2]).padStart(2,"0")}/${String(+p[1]+1).padStart(2,"0")}/${p[0]}`;
   }
   return String(v).trim();
@@ -223,77 +246,104 @@ function cv(row,i){
 
 function fmtPrix(raw){
   if(!raw) return "—";
-  const n=parseFloat(String(raw).replace(/\s/g,"").replace(",","."));
-  return isNaN(n)?"—":n.toLocaleString("fr-FR")+" €";
+  const n = parseFloat(String(raw).replace(/\s/g,"").replace(",","."));
+  return isNaN(n) ? "—" : n.toLocaleString("fr-FR") + " €";
+}
+
+// Classif par délai (col H = index 7)
+// "Immédiatement" → Chaud
+// "1-3 mois"      → Tiède
+// "3-6 mois"      → Froid
+function classifBadge(delai){
+  const d = delai.toLowerCase().replace(/\s/g,"");
+  if(d.includes("immédiat") || d.includes("immediat")){
+    return { cls:"badge-hot",  label:"Chaud",  type:"hot"  };
+  }
+  if(d.includes("1") && d.includes("3")){
+    return { cls:"badge-warm", label:"Tiède",  type:"warm" };
+  }
+  return { cls:"badge-cold", label:"Froid",  type:"cold" };
 }
 
 // ACQUÉREURS
 // A(0)=Horodateur B(1)=Prénom C(2)=Nom D(3)=Budget E(4)=Secteur
-// F(5)=Classification … J(9)=RÉF DOSSIER
+// F(5)=Type bien G(6)=Ville H(7)=Délai → classification J(9)=RÉF DOSSIER
+// (structure exacte peut varier — le filtre agence reste col J index 9)
 async function loadAcq(ag){
-  const el=document.getElementById("listAcq");
+  const el = document.getElementById("listAcq");
   try{
-    const tbl=await fetchSheet(ACQ_ID,"Réponses au formulaire 2");
-    const rows=(tbl.rows||[]).filter(r=>cv(r,9).toUpperCase()===ag);
-    let hot=0,warm=0,cold=0;
-    const html=rows.map(r=>{
-      const nom=`${cv(r,1)} ${cv(r,2)}`.trim();
-      const budget=cv(r,3), secteur=cv(r,4), date=cv(r,0);
-      const cl=cv(r,5).toLowerCase();
-      let badge="";
-      if(cl.includes("chaud")||cl.includes("hot")){hot++;badge=`<span class="badge badge-hot">Chaud</span>`;}
-      else if(cl.includes("tiède")||cl.includes("tiede")||cl.includes("warm")){warm++;badge=`<span class="badge badge-warm">Tiède</span>`;}
-      else{cold++;badge=`<span class="badge badge-cold">Froid</span>`;}
+    const tbl = await fetchSheet(ACQ_ID, "Réponses au formulaire 2");
+    const rows = (tbl.rows||[]).filter(r => cv(r,9).toUpperCase() === ag);
+
+    let hot=0, warm=0, cold=0;
+    const html = rows.map(r => {
+      const prenom  = cv(r,1);
+      const nom     = cv(r,2);
+      const budget  = cv(r,3);
+      const secteur = cv(r,4);
+      const date    = cv(r,0);
+      const delai   = cv(r,7); // col H = délai d'achat
+
+      const c = classifBadge(delai);
+      if(c.type==="hot")  hot++;
+      else if(c.type==="warm") warm++;
+      else cold++;
+
       return `<li class="ritem">
         <div class="rleft">
-          <div class="rname">${nom||"—"}</div>
+          <div class="rname">${prenom} ${nom}</div>
           <div class="rmeta">
-            ${budget?`<span class="tag">${budget}</span>`:""}
-            ${secteur?`<span>${secteur}</span>`:""}
+            ${budget  ? `<span class="tag">${budget}</span>` : ""}
+            ${secteur ? `<span>${secteur}</span>` : ""}
           </div>
         </div>
-        <div class="rright">${badge}<span class="ddate">${date}</span></div>
+        <div class="rright">
+          <span class="badge ${c.cls}">${c.label}</span>
+          <span class="ddate">${date}</span>
+        </div>
       </li>`;
     });
-    document.getElementById("cHot").textContent=hot;
-    document.getElementById("cWarm").textContent=warm;
-    document.getElementById("cCold").textContent=cold;
-    document.getElementById("totalAcq").textContent=rows.length;
-    el.innerHTML=html.length?html.join(""):`<li class="empty">Aucun acquéreur enregistré.</li>`;
-  }catch(e){
-    el.innerHTML=`<li class="empty">Erreur de chargement.</li>`;
-    ["cHot","cWarm","cCold"].forEach(id=>document.getElementById(id).textContent="0");
+
+    document.getElementById("cHot").textContent  = hot;
+    document.getElementById("cWarm").textContent = warm;
+    document.getElementById("cCold").textContent = cold;
+    document.getElementById("totalAcq").textContent = rows.length;
+    el.innerHTML = html.length ? html.join("") : `<li class="empty">Aucun acquéreur enregistré.</li>`;
+  } catch(e){
+    el.innerHTML = `<li class="empty">Erreur de chargement.</li>`;
+    ["cHot","cWarm","cCold"].forEach(id => document.getElementById(id).textContent = "0");
   }
 }
 
 // VENDEURS
-// A(0)=Horodateur  B(1)=Prénom+Nom  C(2)=Email [masqué RGPD]
-// D(3)=Téléphone [masqué RGPD]  E(4)=Type de bien  F(5)=Adresse
-// G(6)=Prix souhaité  H(7)=Délai de vente  I(8)=Déjà en agence
-// J(9)=Agence  K(10)=RÉF DOSSIER
+// A(0)=Horodateur B(1)=Prénom+Nom C(2)=Email [masqué] D(3)=Tel [masqué]
+// E(4)=Type de bien F(5)=Adresse G(6)=Prix souhaité H(7)=Délai
+// I(8)=Déjà en agence J(9)=Agence K(10)=RÉF DOSSIER
 async function loadVend(ag){
-  const el=document.getElementById("listVend");
+  const el = document.getElementById("listVend");
   try{
-    const tbl=await fetchSheet(VEND_ID,"Vendeurs");
-    const rows=(tbl.rows||[]).filter(r=>cv(r,10).toUpperCase()===ag);
-    const html=rows.map(r=>{
-      const nom   =cv(r,1);
-      const type  =cv(r,4);
-      const adresse=cv(r,5);
-      const prix  =cv(r,6);
-      const delai =cv(r,7);
-      const date  =cv(r,0);
-      // Extraire ville = dernier token de l'adresse après virgule ou espace
-      const ville=adresse
-        ? adresse.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).pop()||adresse
+    const tbl = await fetchSheet(VEND_ID, "Vendeurs");
+    const rows = (tbl.rows||[]).filter(r => cv(r,10).toUpperCase() === ag);
+
+    const html = rows.map(r => {
+      const nom    = cv(r,1);
+      const type   = cv(r,4);
+      const adresse= cv(r,5);
+      const prix   = cv(r,6);
+      const delai  = cv(r,7);
+      const date   = cv(r,0);
+
+      const ville = adresse
+        ? adresse.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).pop() || adresse
         : "—";
+
       return `<li class="ritem">
         <div class="rleft">
           <div class="rname">${nom||"—"}</div>
           <div class="rmeta">
-            ${type?`<span class="tag">${type}</span>`:""}
+            ${type  ? `<span class="tag">${type}</span>` : ""}
             <span>${ville}</span>
-            ${delai?`<span style="color:var(--muted);font-size:10px">${delai}</span>`:""}
+            ${delai ? `<span style="font-size:10px">${delai}</span>` : ""}
           </div>
         </div>
         <div class="rright">
@@ -302,20 +352,22 @@ async function loadVend(ag){
         </div>
       </li>`;
     });
-    document.getElementById("totalVend").textContent=rows.length;
-    el.innerHTML=html.length?html.join(""):`<li class="empty">Aucun bien enregistré.</li>`;
-  }catch(e){
-    el.innerHTML=`<li class="empty">Erreur de chargement.</li>`;
-    document.getElementById("totalVend").textContent="0";
+
+    document.getElementById("totalVend").textContent = rows.length;
+    el.innerHTML = html.length ? html.join("") : `<li class="empty">Aucun bien enregistré.</li>`;
+  } catch(e){
+    el.innerHTML = `<li class="empty">Erreur de chargement.</li>`;
+    document.getElementById("totalVend").textContent = "0";
   }
 }
 
 (async function init(){
-  const ag=getAgence();
-  document.getElementById("agencyLabel").textContent=ag?`${ag} · ${NAMES[ag]||ag}`:"Agence inconnue";
-  document.title=`Dashboard — ${NAMES[ag]||ag||"Liberty IA"}`;
+  const ag = getAgence();
+  document.getElementById("agencyLabel").textContent =
+    ag ? `${ag} · ${NAMES[ag]||ag}` : "Agence inconnue";
+  document.title = `Dashboard — ${NAMES[ag]||ag||"Liberty IA"}`;
   if(!ag) return;
-  await Promise.all([loadAcq(ag),loadVend(ag)]);
+  await Promise.all([loadAcq(ag), loadVend(ag)]);
 })();
 </script>
 
